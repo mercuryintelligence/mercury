@@ -11,6 +11,9 @@ AGENTS.md
 
 # Dev tooling — not for users
 .beads/
+.beads.gate.lock
+.claude/settings.json
+.claude/settings.local.json
 .claude/skills.bak*/
 .claude/skills.backup-*/
 .gitnexus/

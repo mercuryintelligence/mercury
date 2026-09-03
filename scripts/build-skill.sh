@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Deterministic build of terminalbeta/using-mercury.skill from .claude/using-mercury/.
+# Deterministic build of terminalbeta/skills/using-mercury.skill from skills/using-mercury/.
 # Uses python3 stdlib (zipfile) for portability: fixed epoch mtime, sorted filelist,
 # no extra attributes, so successive builds are bit-identical.
 cd "$(dirname "$0")/.."
-SRC=.claude/using-mercury
-OUT=using-mercury.skill
+SRC=skills/using-mercury
+OUT=skills/using-mercury.skill
 [ -d "$SRC" ] || { echo "missing source $SRC" >&2; exit 1; }
 
 python3 - "$SRC" "$OUT" <<'PY'
@@ -21,7 +21,7 @@ files.sort()
 # Deterministic zip: fixed epoch date, sorted entries, DEFLATE, no external attrs, no extras.
 with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as z:
     for f in files:
-        # arcname strips the ".claude/" prefix, keeping "using-mercury/..." as the top-level dir.
+        # arcname strips the "skills/" prefix, keeping "using-mercury/..." as the top-level dir.
         arcname = os.path.relpath(f, os.path.dirname(src))
         info = zipfile.ZipInfo(filename=arcname, date_time=(1980, 1, 1, 0, 0, 0))
         info.compress_type = zipfile.ZIP_DEFLATED
