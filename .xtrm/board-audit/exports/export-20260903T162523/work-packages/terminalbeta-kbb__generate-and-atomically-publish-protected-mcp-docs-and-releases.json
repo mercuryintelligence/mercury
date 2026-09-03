@@ -1,0 +1,43 @@
+{
+  "content_sha256": "5df70204f8acbc664d4c35de9f6199ec9019076844002e7a54899f5694167483",
+  "diagnostics": {
+    "dangling_relations": [],
+    "derived_dotted_parent_links": [],
+    "multiple_parent_nodes": []
+  },
+  "external_relations": [],
+  "hierarchy": {
+    "children": [],
+    "id": "terminalbeta-kbb"
+  },
+  "issues": {
+    "terminalbeta-kbb": {
+      "selection_state": "selected",
+      "source": {
+        "_type": "issue",
+        "comment_count": 0,
+        "created_at": "2026-07-20T13:51:38Z",
+        "created_by": "jaggerxtrm",
+        "dependency_count": 0,
+        "dependent_count": 0,
+        "description": "## PROBLEM\nMercury Docs needs versioned protected content and release inputs, but terminalbeta has no atomic publisher that guarantees complete objects and verified checksums before clients discover a version.\n\n## SUCCESS\nOne command generates and publishes protected-docs/mcp/<version>/catalog.json, Markdown pages, search.json, releases/mcp_beta/<version>/manifest.json, and release assets, then updates current.json only after every uploaded object and checksum verifies.\n\n## SCOPE\nDefine artifact schemas; generate docs catalog, pages, and search index; package release assets and sanitized source manifest data; calculate checksums; upload to private Supabase buckets; verify remote objects; reject duplicate versions; and atomically advance current.json after complete verification.\n\n## NON_GOALS\nDo not serve HTTP APIs, authorize users, sign download URLs, or embed Supabase service credentials in browser artifacts. Do not publish partial versions.\n\n## CONSTRAINTS\nThis task supplies the private artifact contract consumed by platform-e9g. Use immutable version prefixes, deterministic outputs, idempotent verification, and a final pointer update as the only discovery step. Failed uploads leave the prior current.json intact.\n\n## VALIDATION\nCover checksums, missing pages or assets, duplicate versions, partial upload failure, remote verification mismatch, interrupted pointer update, retry behavior, and successful publication. Confirm no secret, source-only path, or unsafe manifest field enters published client payloads.\n\n## OUTPUT\nA terminalbeta P1 publisher, schemas, generated artifact layout, private-bucket upload integration, atomic current.json update, rollback/cleanup guidance, and automated release-pipeline tests.\n\n## Acceptance Criteria\nAll SUCCESS and VALIDATION conditions pass, remote checksums match, publication is atomic, failed uploads preserve the prior current.json, and no protected metadata leaks.",
+        "id": "terminalbeta-kbb",
+        "issue_type": "task",
+        "labels": [
+          "contract:ready"
+        ],
+        "owner": "jagger.xtrm@gmail.com",
+        "priority": 1,
+        "status": "open",
+        "title": "Generate and atomically publish protected MCP docs and releases",
+        "updated_at": "2026-07-20T13:55:49Z"
+      }
+    }
+  },
+  "relations": [],
+  "repository": "mercuryintelligence/terminalbeta",
+  "root_id": "terminalbeta-kbb",
+  "root_title": "Generate and atomically publish protected MCP docs and releases",
+  "schema_version": "xtrm.board-audit.work-package.v1",
+  "scope": "open"
+}

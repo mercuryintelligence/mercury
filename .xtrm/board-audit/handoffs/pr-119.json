@@ -1,0 +1,28 @@
+{
+  "beads_root_ids": [
+    "terminalbeta-644",
+    "terminalbeta-6p8",
+    "terminalbeta-kbb"
+  ],
+  "generated_at": "2026-09-03T14:25:20Z",
+  "handoff": ".xtrm/board-audit/handoffs/pr-119.json",
+  "implementation_branch": "feat/ws008-phase6-using-mercury-restoration",
+  "implementation_head_sha": "2576f0d81597fff439433f0b64393f652b26ea1c",
+  "index": ".xtrm/board-audit/index.json",
+  "open_issue_count": 3,
+  "producer": {
+    "board_audit_source": "caller",
+    "git_sha": null,
+    "package_sha256": "fc5c7cd0ffdfec5145cd7b488ae8bf92a4542029fb45d6d2b268b0a7cdd50c9f",
+    "repository": null
+  },
+  "pull_request": 119,
+  "repository": "mercuryintelligence/terminalbeta",
+  "schema_version": "xtrm.board-audit.pr-handoff.v1",
+  "snapshot_id": "ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85",
+  "snapshot_sha256": "92e60a506c2e03a746ba42b64d1f3850a46df17ac15e288561921825a98e4b49",
+  "state": "prepared",
+  "transport_branch": "board-audit/pr-119",
+  "transport_head_sha": null,
+  "work_package_count": 3
+}

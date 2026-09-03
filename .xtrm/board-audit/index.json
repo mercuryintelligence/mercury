@@ -1,0 +1,71 @@
+{
+  "open_issues": {
+    "terminalbeta-644": {
+      "file": "snapshots/ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85/issues/terminalbeta-644.json",
+      "root_id": "terminalbeta-644",
+      "snapshot_id": "ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85",
+      "source_sha256": "6bbca800c94e1c3da17a572f1c8074b7411386d621e6f68a84175472bd0aa8f2",
+      "state": "open"
+    },
+    "terminalbeta-6p8": {
+      "file": "snapshots/ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85/issues/terminalbeta-6p8.json",
+      "root_id": "terminalbeta-6p8",
+      "snapshot_id": "ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85",
+      "source_sha256": "4fa8352ad1b89fccb1c03b248402dd4cdb5b10ca91be4a20b561948ec2f77576",
+      "state": "open"
+    },
+    "terminalbeta-kbb": {
+      "file": "snapshots/ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85/issues/terminalbeta-kbb.json",
+      "root_id": "terminalbeta-kbb",
+      "snapshot_id": "ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85",
+      "source_sha256": "be36a07f339c9f03850635e9c9bed71ee1fe48ab083c6b0b387a30381b0d4a9b",
+      "state": "open"
+    }
+  },
+  "packages": {
+    "terminalbeta-644": {
+      "base_package_sha256": "6fb155bdbec6f4c880caf80330d126f26f74e61b0348fb833631053b05971438",
+      "branch": "board-audit/pr-119",
+      "editable": ".xtrm/board-audit/exports/export-20260903T162523/work-packages/terminalbeta-644__decide-whether-terminalbeta-still-needs-service-registry-json.editable.json",
+      "export_dir": ".xtrm/board-audit/exports/export-20260903T162523",
+      "manifest": ".xtrm/board-audit/exports/export-20260903T162523/manifest.json",
+      "package": ".xtrm/board-audit/exports/export-20260903T162523/work-packages/terminalbeta-644__decide-whether-terminalbeta-still-needs-service-registry-json.json",
+      "selected_record_count": 3,
+      "state": "prepared",
+      "updated_at": "2026-09-03T14:25:23Z"
+    },
+    "terminalbeta-6p8": {
+      "base_package_sha256": "9edc68e75b97e6dfc41a6cf300f5c39005605f4303edb9b7f9e61704bbd36753",
+      "branch": "board-audit/pr-119",
+      "editable": ".xtrm/board-audit/exports/export-20260903T162523/work-packages/terminalbeta-6p8__p0-bootstrap-service-knowledge-v0-7-0-jira-issue-51.editable.json",
+      "export_dir": ".xtrm/board-audit/exports/export-20260903T162523",
+      "manifest": ".xtrm/board-audit/exports/export-20260903T162523/manifest.json",
+      "package": ".xtrm/board-audit/exports/export-20260903T162523/work-packages/terminalbeta-6p8__p0-bootstrap-service-knowledge-v0-7-0-jira-issue-51.json",
+      "selected_record_count": 3,
+      "state": "prepared",
+      "updated_at": "2026-09-03T14:25:23Z"
+    },
+    "terminalbeta-kbb": {
+      "base_package_sha256": "5df70204f8acbc664d4c35de9f6199ec9019076844002e7a54899f5694167483",
+      "branch": "board-audit/pr-119",
+      "editable": ".xtrm/board-audit/exports/export-20260903T162523/work-packages/terminalbeta-kbb__generate-and-atomically-publish-protected-mcp-docs-and-releases.editable.json",
+      "export_dir": ".xtrm/board-audit/exports/export-20260903T162523",
+      "manifest": ".xtrm/board-audit/exports/export-20260903T162523/manifest.json",
+      "package": ".xtrm/board-audit/exports/export-20260903T162523/work-packages/terminalbeta-kbb__generate-and-atomically-publish-protected-mcp-docs-and-releases.json",
+      "selected_record_count": 3,
+      "state": "prepared",
+      "updated_at": "2026-09-03T14:25:23Z"
+    }
+  },
+  "pr_checkpoints": {
+    "119": {
+      "branch": "board-audit/pr-119",
+      "handoff": "handoffs/pr-119.json",
+      "implementation_head_sha": "2576f0d81597fff439433f0b64393f652b26ea1c",
+      "snapshot_id": "ca42082706f8965cd503fa2975ee00b8bfb748b8d4650b06318d65b968cb8c85",
+      "state": "prepared",
+      "updated_at": "2026-09-03T14:25:20Z"
+    }
+  },
+  "schema_version": "xtrm.board-audit.index.v1"
+}

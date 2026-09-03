@@ -1,0 +1,72 @@
+{
+  "content_sha256": "6fb155bdbec6f4c880caf80330d126f26f74e61b0348fb833631053b05971438",
+  "desired_issues": {
+    "terminalbeta-644": {
+      "_type": "issue",
+      "comment_count": 0,
+      "created_at": "2026-04-23T11:20:44Z",
+      "created_by": "dawid",
+      "dependency_count": 0,
+      "dependent_count": 0,
+      "description": "## PROBLEM\nThe original service-registry bootstrap predates xtrm v2 and may no longer represent an active terminalbeta requirement.\n\n## SUCCESS\nA later audit either closes this stale decision with evidence that current service discovery is sufficient or identifies a concrete missing consumer and files a narrow implementation bead.\n\n## SCOPE\nInspect current xtrm v2 skill discovery, canonical registry sources, and terminalbeta-specific consumers that would require service-registry.json.\n\n## NON_GOALS\nDo not create or overwrite a registry speculatively. Do not block the protected artifact publisher or Mercury Docs release.\n\n## CONSTRAINTS\nTreat current xtrm behavior and generated assets as authoritative. Avoid introducing a second source of truth.\n\n## VALIDATION\nList active consumers, verify current discovery, compare canonical templates, and record a keep, replace, or close decision.\n\n## OUTPUT\nA P4 evidence-backed decision and a separate implementation bead only if a demonstrated gap remains.\n\n## Rationale\nThe issue remains only as a P4 decision because its original implementation assumption predates xtrm v2 service discovery.\n\n## Alternatives Considered\nCreate the file immediately; close without checking consumers; or audit current discovery first. Audit-first avoids a duplicate source of truth.",
+      "id": "terminalbeta-644",
+      "issue_type": "decision",
+      "labels": [
+        "contract:ready"
+      ],
+      "priority": 4,
+      "status": "open",
+      "title": "Decide whether terminalbeta still needs service-registry.json",
+      "updated_at": "2026-07-20T14:01:02Z"
+    }
+  },
+  "diagnostics": {
+    "dangling_relations": [],
+    "derived_dotted_parent_links": [],
+    "multiple_parent_nodes": []
+  },
+  "external_relations": [],
+  "hierarchy": {
+    "children": [],
+    "id": "terminalbeta-644"
+  },
+  "issues": {
+    "terminalbeta-644": {
+      "selection_state": "selected",
+      "source": {
+        "_type": "issue",
+        "comment_count": 0,
+        "created_at": "2026-04-23T11:20:44Z",
+        "created_by": "dawid",
+        "dependency_count": 0,
+        "dependent_count": 0,
+        "description": "## PROBLEM\nThe original service-registry bootstrap predates xtrm v2 and may no longer represent an active terminalbeta requirement.\n\n## SUCCESS\nA later audit either closes this stale decision with evidence that current service discovery is sufficient or identifies a concrete missing consumer and files a narrow implementation bead.\n\n## SCOPE\nInspect current xtrm v2 skill discovery, canonical registry sources, and terminalbeta-specific consumers that would require service-registry.json.\n\n## NON_GOALS\nDo not create or overwrite a registry speculatively. Do not block the protected artifact publisher or Mercury Docs release.\n\n## CONSTRAINTS\nTreat current xtrm behavior and generated assets as authoritative. Avoid introducing a second source of truth.\n\n## VALIDATION\nList active consumers, verify current discovery, compare canonical templates, and record a keep, replace, or close decision.\n\n## OUTPUT\nA P4 evidence-backed decision and a separate implementation bead only if a demonstrated gap remains.\n\n## Rationale\nThe issue remains only as a P4 decision because its original implementation assumption predates xtrm v2 service discovery.\n\n## Alternatives Considered\nCreate the file immediately; close without checking consumers; or audit current discovery first. Audit-first avoids a duplicate source of truth.",
+        "id": "terminalbeta-644",
+        "issue_type": "decision",
+        "labels": [
+          "contract:ready"
+        ],
+        "priority": 4,
+        "status": "open",
+        "title": "Decide whether terminalbeta still needs service-registry.json",
+        "updated_at": "2026-07-20T14:01:02Z"
+      }
+    }
+  },
+  "new_comments": {},
+  "relations": [],
+  "repository": "mercuryintelligence/terminalbeta",
+  "root_id": "terminalbeta-644",
+  "root_title": "Decide whether terminalbeta still needs service-registry.json",
+  "roundtrip": {
+    "base_package_sha256": "6fb155bdbec6f4c880caf80330d126f26f74e61b0348fb833631053b05971438",
+    "base_record_sha256": {
+      "terminalbeta-644": "6bbca800c94e1c3da17a572f1c8074b7411386d621e6f68a84175472bd0aa8f2"
+    },
+    "edit_contract": "modify desired_issues and new_comments only; issues.*.source is immutable base state",
+    "prepared_at": "2026-09-03T14:25:23Z",
+    "schema_version": "xtrm.board-audit.roundtrip.v1"
+  },
+  "schema_version": "xtrm.board-audit.work-package.v1",
+  "scope": "open"
+}

@@ -1,0 +1,52 @@
+{
+  "bd_version": "bd version 1.2.2 (source-v65: board-audit-staging/pr-119-176401-162521@7fcf4e1634bf)",
+  "diagnostics": {
+    "derived_dotted_parent_links": [],
+    "unknown_parent_refs": [],
+    "unpackaged_selected_ids": []
+  },
+  "generated_at": "2026-09-03T14:25:23.517023+00:00",
+  "packages": [
+    {
+      "content_sha256": "6fb155bdbec6f4c880caf80330d126f26f74e61b0348fb833631053b05971438",
+      "context_only_issue_count": 0,
+      "file": "work-packages/terminalbeta-644__decide-whether-terminalbeta-still-needs-service-registry-json.json",
+      "issue_count": 1,
+      "root_id": "terminalbeta-644",
+      "selected_issue_count": 1,
+      "title": "Decide whether terminalbeta still needs service-registry.json"
+    },
+    {
+      "content_sha256": "9edc68e75b97e6dfc41a6cf300f5c39005605f4303edb9b7f9e61704bbd36753",
+      "context_only_issue_count": 0,
+      "file": "work-packages/terminalbeta-6p8__p0-bootstrap-service-knowledge-v0-7-0-jira-issue-51.json",
+      "issue_count": 1,
+      "root_id": "terminalbeta-6p8",
+      "selected_issue_count": 1,
+      "title": "P0: bootstrap service-knowledge (v0.7.0) — jira ISSUE-51"
+    },
+    {
+      "content_sha256": "5df70204f8acbc664d4c35de9f6199ec9019076844002e7a54899f5694167483",
+      "context_only_issue_count": 0,
+      "file": "work-packages/terminalbeta-kbb__generate-and-atomically-publish-protected-mcp-docs-and-releases.json",
+      "issue_count": 1,
+      "root_id": "terminalbeta-kbb",
+      "selected_issue_count": 1,
+      "title": "Generate and atomically publish protected MCP docs and releases"
+    }
+  ],
+  "repository": "mercuryintelligence/terminalbeta",
+  "schema_version": "xtrm.board-audit.snapshot-manifest.v1",
+  "selection": {
+    "context_only_record_count": 0,
+    "requested_id": null,
+    "scope": "open",
+    "selected_record_count": 3
+  },
+  "source": {
+    "command": "bd export --all",
+    "raw_file": "raw-beads.jsonl",
+    "raw_record_count": 35,
+    "raw_sha256": "92e60a506c2e03a746ba42b64d1f3850a46df17ac15e288561921825a98e4b49"
+  }
+}
