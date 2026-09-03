@@ -1,0 +1,68 @@
+name: Discord release announcement
+
+# Posts one message per published GitHub Release of the Mercury Platform to
+# the Discord server. Requires the repo secret DISCORD_RELEASE_WEBHOOK_URL
+# (Discord channel webhook URL). Skips silently when the secret is absent.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  announce:
+    name: Announce release on Discord
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Post release announcement
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_RELEASE_WEBHOOK_URL }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+          RELEASE_AUTHOR: ${{ github.event.release.author.login }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_RELEASE_WEBHOOK_URL secret is not set; skipping announcement" >&2
+            exit 0
+          fi
+
+          # Discord embeds support markdown but not headings; bold them.
+          # Full notes are always one click away in RELEASE_URL.
+          notes="$(printf '%s' "$RELEASE_BODY" | sed -E 's/^#+ (.*)$/**\1**/')"
+          if [ "${#notes}" -gt 3900 ]; then
+            notes="${notes:0:3900}…"
+          fi
+
+          payload="$(jq -n \
+            --arg tag "$RELEASE_TAG" \
+            --arg name "$RELEASE_NAME" \
+            --arg url "$RELEASE_URL" \
+            --arg author "$RELEASE_AUTHOR" \
+            --arg notes "$notes" \
+            '{
+              username: "Mercury Platform Releases",
+              embeds: [{
+                title: ("🚀 " + $name),
+                url: $url,
+                description: $notes,
+                color: 3447003,
+                footer: { text: ("published by @" + $author) },
+                timestamp: (now | todate)
+              }]
+            }')"
+
+          response="$(curl --proto '=https' --tlsv1.2 -fsS \
+            -H 'Content-Type: application/json' \
+            -X POST \
+            --data "$payload" \
+            -w '\n%{http_code}' \
+            "$DISCORD_WEBHOOK_URL?wait=true")"
+
+          status="${response##*$'\n'}"
+          echo "Discord webhook responded HTTP $status for $RELEASE_TAG"
