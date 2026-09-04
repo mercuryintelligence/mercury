@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="mercury-doc-kind" content="v0.3.2-user-api-guide"><meta name="mercury-runtime-version" content="0.3.2"><title>Darth Feedor v0.3.2 — User &amp; MCP API Guide</title><meta name="description" content="Darth Feedor v0.3.2 canonical user and MCP API guide: market context, squawk evidence, article intelligence, institutional research, progressive retrieval and complete public tool reference."><style>
+:root{--bg:#FAFAF7;--paper:#FFFFFF;--soft:#F2F2EE;--tint:#E9EEFF;--border:#E5E5E0;--ink:#0A0A0A;--muted:#525252;--cap:#737373;--accent:#4169E1;--deep:#3157CC;--warn:#B7791F;--sans:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"Cascadia Code","SFMono-Regular",Consolas,monospace;--display:"Space Grotesk",Inter,system-ui,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans)}a{color:inherit;text-decoration:none}code,pre{font-family:var(--mono)}code{font-size:.92em}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:minmax(0,1080px) 280px;gap:42px;padding:28px 32px 80px}.doc{min-width:0}.top{display:flex;justify-content:space-between;align-items:flex-start;padding:4px 0 24px;border-bottom:1px solid var(--border)}.brand{font:600 17px var(--display)}.brand span{color:var(--accent);font:500 12px var(--mono)}.ver{font:11px/1.55 var(--mono);color:var(--cap);text-align:right}.toc{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;border-left:1px solid var(--border);padding:4px 0 18px 20px}.toc h3{margin:0 0 10px;font:600 11px var(--mono);letter-spacing:.06em;color:var(--cap)}.toc a{display:block;padding:5px 7px;border-radius:7px;color:var(--muted);font-size:12px}.toc a:hover{background:var(--tint);color:var(--deep)}.hero{padding:48px 0 36px}.eyebrow{color:var(--accent);font:600 11px var(--mono);letter-spacing:.06em}.hero h1{margin:12px 0 0;font:600 clamp(42px,6vw,72px)/1 var(--display);letter-spacing:-.045em}.lead{max-width:850px;margin:20px 0 0;color:var(--muted);font-size:18px}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.pill{border:1px solid var(--border);background:var(--paper);border-radius:999px;padding:6px 9px;color:var(--muted);font:10.5px var(--mono)}section{padding:34px 0;border-top:1px solid var(--border);scroll-margin-top:20px}h2{margin:8px 0 14px;font:600 30px/1.2 var(--display);letter-spacing:-.025em}h3{margin:28px 0 10px;font:600 20px var(--display)}p,li{color:var(--muted)}li+li{margin-top:5px}.callout{margin:18px 0;padding:15px 18px;border:1px solid var(--border);border-left:3px solid var(--accent);background:var(--tint);border-radius:0 11px 11px 0;color:var(--muted)}.callout strong{color:var(--ink)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{padding:17px;border:1px solid var(--border);background:var(--paper);border-radius:13px}.card .label{font:10px var(--mono);color:var(--accent)}.card h3{margin:7px 0 4px;font-size:17px}.card p{margin:0;font-size:13px}.code,.sig{margin:12px 0;padding:14px 16px;border-radius:11px;background:#222222;color:#E7E7E4;overflow:auto;white-space:pre-wrap;font:11.5px/1.65 var(--mono)}.docstring-label{margin-top:18px;font:600 10px var(--mono);letter-spacing:.06em;color:var(--cap);text-transform:uppercase}.tablewrap{overflow:auto;margin:14px 0}.api{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--paper);font-size:12px}.api th{padding:9px 11px;text-align:left;background:var(--soft);color:var(--cap);font:600 10px var(--mono);border-bottom:1px solid var(--border)}.api td{padding:10px 11px;vertical-align:top;color:var(--muted);border-bottom:1px solid var(--border)}.api tr:last-child td{border-bottom:0}.api td:first-child{font-family:var(--mono);color:var(--ink);white-space:nowrap}.tool{margin-top:22px;padding:22px;border:1px solid var(--border);background:var(--paper);border-radius:13px;scroll-margin-top:20px}.tool h3{margin:0;color:var(--accent);font:600 21px var(--mono)}.status{display:inline-block;margin-left:8px;padding:4px 7px;border:1px solid var(--border);border-radius:999px;color:var(--cap);font:10px var(--mono)}.example{margin-top:18px;padding:20px;border:1px solid var(--border);background:var(--paper);border-radius:13px}.example h3{margin:0}footer{padding-top:28px;border-top:1px solid var(--border);color:var(--cap);font:10.5px/1.7 var(--mono)}@media(max-width:1050px){.shell{grid-template-columns:1fr;padding:20px}.toc{display:none}.grid{grid-template-columns:1fr}}@media(max-width:650px){.top{display:block}.ver{text-align:left;margin-top:8px}.hero{padding-top:30px}.tool{padding:16px}.api{font-size:11px}}
+</style></head><body><div class="shell"><main class="doc"><div class="top"><div class="brand">Mercury Intelligence <span>// Darth Feedor</span></div><div class="ver">v0.3.2<br>user + MCP API guide</div></div>
+<header class="hero" id="overview"><div class="eyebrow">DARTH FEEDOR / INTELLIGENCE MCP</div><h1>Market intelligence for agents.</h1><p class="lead">Darth Feedor turns rolling market context, recent squawk evidence, article intelligence and institutional research into a progressive read-only MCP surface. Start narrow, check freshness, preserve evidence and deepen only when the question requires it.</p><div class="pills"><span class="pill">v0.3.2</span><span class="pill">14 MCP tools</span><span class="pill">Streamable HTTP</span><span class="pill">X-API-Key</span><span class="pill">TOON / JSON</span></div></header>
+<div class="callout"><strong>Public guide.</strong> This page explains what Darth Feedor does, how to connect, which workflows to use, how freshness/evidence work, and the complete public MCP surface. Internal routing and operator-only deployment mechanics are intentionally excluded.</div>
+<section id="what"><div class="eyebrow">01 / CAPABILITIES</div><h2>What Darth Feedor does</h2><div class="grid"><div class="card"><div class="label">MARKET CONTEXT</div><h3>Understand what matters now</h3><p><code>get_squawk_context</code> gives processed rolling orientation: overview, key data, themes, topics and theme briefs.</p></div><div class="card"><div class="label">RECENT EVIDENCE</div><h3>Check what was actually reported</h3><p><code>get_squawks</code> gives bounded lexical retrieval over raw market flow with exact windows and stable pagination.</p></div><div class="card"><div class="label">ARTICLE INTELLIGENCE</div><h3>Discover before you deep-read</h3><p><code>list_articles</code>, bullets, graph and progressive search let you select evidence before opening full detail.</p></div><div class="card"><div class="label">INSTITUTIONAL RESEARCH</div><h3>Add formal research depth</h3><p><code>get_research</code> is metadata-first; <code>get_research_detail</code> opens one selected document.</p></div></div></section>
+<section id="start"><div class="eyebrow">02 / START HERE</div><h2>Connect and make the first useful call</h2><div class="tablewrap"><table class="api"><tr><th>Item</th><th>Value</th></tr><tr><td>Endpoint</td><td><code>/feeder/mcp</code></td></tr><tr><td>Transport</td><td>Streamable HTTP</td></tr><tr><td>Authentication</td><td><code>X-API-Key</code></td></tr><tr><td>Machine schema</td><td><code>tools/list</code></td></tr><tr><td>Agent operating guide</td><td><code>get_capability_guide()</code></td></tr></table></div><h3>Verify the connection</h3><div class="code">tool_health_check()</div><p>Availability and runtime version only; not an intelligence-freshness check.</p><h3>Ask what is happening now</h3><div class="code">get_squawk_context(mode="latest", view="dashboard", format="toon")</div><h3>Validate a claim</h3><div class="code">get_squawks(hours_back=2, query="Fed OR yields", limit=20, format="toon")</div></section>
+<section id="mental"><div class="eyebrow">03 / MENTAL MODEL</div><h2>Progressive evidence, not bulk retrieval</h2><div class="callout"><strong>choose a goal → smallest useful retrieval → check freshness → inspect evidence → deepen deliberately</strong></div><ul><li>Processed context is orientation, not raw evidence.</li><li>Relevance is not recency.</li><li>Generated summaries, bullets and briefs are derived analysis.</li><li>Hard maxima are safety ceilings, not recommended sizes.</li><li>TOON is the normal inspection format; JSON is for typed/programmatic work.</li><li>Article and research retrieval are deliberately progressive.</li></ul></section>
+<section id="workflows"><div class="eyebrow">04 / WORKFLOWS</div><h2>Use Darth Feedor by question</h2><div class="example"><h3>What is happening now?</h3><div class="code">get_squawk_context(mode="latest", view="dashboard", format="toon")
+→ inspect age/freshness
+→ narrow the view if needed
+→ validate time-sensitive claims with get_squawks</div></div><div class="example"><h3>Was a topic present in recent flow?</h3><div class="code">get_squawks(hours_back=2, query="CPI OR inflation", limit=20)
+
+no match?
+same window + synonyms
+→ wider window if justified
+→ paginate when needed</div></div><div class="example"><h3>Research an article theme</h3><div class="code">list_articles(query="Treasury curve", limit=10)
+→ get_article_bullets(ids=[...])
+→ get_article_detail(article_id=&lt;best-id&gt;)
+→ article_graph(article_id=&lt;seed-id&gt;) when related coverage helps
+→ progressive_article_search(seed_query="Treasury curve") for bounded breadth</div></div><div class="example"><h3>Build a bounded cross-article brief</h3><div class="code">aggregate_articles(since_days=3, category="Macro", limit=30)</div></div><div class="example"><h3>Add institutional research</h3><div class="code">get_research(query="Treasury term premium", limit=10, view="metadata")
+→ inspect publisher/date/tags
+→ get_research_detail(document_id=&lt;selected-id&gt;)</div></div></section>
+<section id="freshness"><div class="eyebrow">05 / FRESHNESS</div><h2>Know which clock you are reading</h2><div class="tablewrap"><table class="api"><tr><th>Surface</th><th>Clock</th><th>Meaning</th></tr><tr><td>Processed context</td><td>synthesis/update, <code>age_hours</code>, <code>stale</code></td><td>processed-intelligence freshness</td></tr><tr><td>Squawks</td><td><code>received_at</code></td><td>raw evidence arrival</td></tr><tr><td>Articles</td><td><code>published_at</code></td><td>source publication</td></tr><tr><td>Research</td><td>document date</td><td>source-document time</td></tr></table></div><p>Missing freshness is unknown, not fresh. Generated summaries/briefs/bullets are derived intelligence. Preserve source-facing identifiers when a conclusion matters.</p></section>
+<section id="map"><div class="eyebrow">06 / CAPABILITY MAP</div><h2>Choose the cheapest useful surface</h2><div class="tablewrap"><table class="api"><tr><th>Goal</th><th>First call</th><th>Deepen with</th></tr><tr><td>Current market</td><td><code>get_squawk_context(view="dashboard")</code></td><td>narrower context, then squawks</td></tr><tr><td>Recent evidence</td><td><code>get_squawks(limit=10–25)</code></td><td>synonyms, window, pagination</td></tr><tr><td>Article discovery</td><td><code>list_articles(limit=10)</code></td><td>bullets, graph, progressive search</td></tr><tr><td>Institutional research</td><td><code>get_research(limit=10)</code></td><td><code>get_research_detail</code></td></tr></table></div></section>
+<section id="api"><div class="eyebrow">07 / API REFERENCE</div><h2>Complete MCP tool reference</h2><p><code>tools/list</code> remains the exact executable schema authority. This section reproduces it in full: every tool, every public parameter with its type, default and accepted values, and the tool description exactly as clients receive it.</p>
+<div class="tool" id="tool-tool_health_check"><h3>tool_health_check</h3>
+<div class="sig">tool_health_check() -&gt; dict[str, str]</div>
+<p>Takes no parameters.</p>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Check availability of the Feedor MCP server and its database connection.
+
+Diagnostic probe only — returns no market intelligence. Use when calls
+fail or to verify server availability before a long workflow. A healthy
+result is a point-in-time availability status, not a freshness signal for
+any data surface. If healthy, proceed to the smallest relevant retrieval
+tool or get_capability_guide for workflow guidance; if unhealthy, no
+intelligence tool will succeed.</div></div>
+<div class="tool" id="tool-get_capability_guide"><h3>get_capability_guide</h3>
+<div class="sig">get_capability_guide(
+    section: str | None = None
+) -&gt; dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>section</td><td><code>str | None</code></td><td><code>None</code></td><td>Optional section name to scope the response to one topic (for example &quot;quick_start&quot; or &quot;fallbacks&quot;). When None, the full guide is returned. Legacy v1 section names remain accepted as aliases.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Return the Feedor capability guide - an operational usage guide.
+
+The guide teaches goal-first usage of this server: choose workflows by
+goal, distinguish processed context from raw evidence, apply freshness
+rules, use progressive retrieval to bound context cost, and fall back
+safely when a surface is stale, empty, or unavailable.
+
+Args:
+    section: Optional section name to scope the response to one topic
+             (for example &quot;quick_start&quot; or &quot;fallbacks&quot;). When None, the
+             full guide is returned. Legacy v1 section names remain
+             accepted as aliases.
+
+Returns:
+    The full guide, requested section, or a structured rejection for an
+    unknown section. For exact callable parameter schemas use tools/list.</div></div>
+<div class="tool" id="tool-get_articles"><h3>get_articles <span class="status">deprecated</span></h3>
+<div class="sig">get_articles(
+    source: str | None = None,
+    has_summary: bool | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    limit: int = 20,
+    fields: list[str] | None = None,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>source</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by source tag. Values: &#x27;gmail-substack&#x27;, &#x27;financial-media&#x27;, &#x27;official-documents&#x27;. If omitted, returns all sources.</td></tr><tr><td>has_summary</td><td><code>bool | None</code></td><td><code>None</code></td><td>True=only articles with LLM summary, False=unsummarized only.</td></tr><tr><td>date_from</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date lower bound (YYYY-MM-DD) on published_at.</td></tr><tr><td>date_to</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date upper bound (YYYY-MM-DD) on published_at.</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>20</code></td><td>Max rows to return (default 20, max 50). Higher values are rejected with a structured error naming the cap.</td></tr><tr><td>fields</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Subset of fields to include. Valid: id, title, source, url, published_at, created_at, relevance_score, sender_name, is_content_blocked. &#x27;summary&#x27; is not available on this surface.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">DEPRECATED — legacy compatibility surface returning bounded article
+METADATA for a source and date window. Retained for one compatibility
+period only; use list_articles (view=&#x27;compact&#x27; for discovery,
+view=&#x27;analytical&#x27; for a bounded thesis/bullets) for new integrations.
+
+Retained for backward compatibility — legacy status, but not the
+preferred first tool for article research. Prefer the progressive ladder:
+list_articles for lightweight discovery, get_article_bullets for selected
+enrichment, get_article_detail for a single deep read. Full summaries
+are NOT returned: summary content is excluded from every response and
+requesting it via fields is rejected with a structured error. URLs are
+deterministically redacted of sensitive/tracking query parameters. The
+row/byte bounds — including the total-payload ceiling — form a hard
+safety ceiling; requests above them are rejected structurally.
+A concrete narrow example: get_articles(source=&quot;financial-media&quot;,
+date_from=&quot;2026-08-20&quot;, date_to=&quot;2026-08-22&quot;, limit=25).
+
+Args:
+    source: Filter by source tag. Values: &#x27;gmail-substack&#x27;, &#x27;financial-media&#x27;,
+            &#x27;official-documents&#x27;. If omitted, returns all sources.
+    has_summary: True=only articles with LLM summary, False=unsummarized only.
+    date_from: ISO date lower bound (YYYY-MM-DD) on published_at.
+    date_to: ISO date upper bound (YYYY-MM-DD) on published_at.
+    limit: Max rows to return (default 20, max 50). Higher values are
+           rejected with a structured error naming the cap.
+    fields: Subset of fields to include. Valid: id, title, source, url,
+            published_at, created_at, relevance_score, sender_name,
+            is_content_blocked. &#x27;summary&#x27; is not available on this surface.
+    format: &#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;).
+              Defaults to UTC if omitted or invalid.</div></div>
+<div class="tool" id="tool-list_articles"><h3>list_articles</h3>
+<div class="sig">list_articles(
+    since_days: int = 2,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    category: str | None = None,
+    source: str | None = None,
+    limit: int = 10,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None,
+    query: str | None = None,
+    tags: list[str] | None = None,
+    tag_match: str = &#x27;any&#x27;,
+    view: str = &#x27;compact&#x27;
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>since_days</td><td><code>int</code></td><td><code>2</code></td><td>Days back from now (default 2). Ignored if date_from is set.</td></tr><tr><td>date_from</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date lower bound (YYYY-MM-DD) on published_at.</td></tr><tr><td>date_to</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date upper bound (YYYY-MM-DD) on published_at.</td></tr><tr><td>category</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by LLM category. Values: Macro, Policy, Equities, Geopolitics, Noise.</td></tr><tr><td>source</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by source tag. Values: &#x27;gmail-substack&#x27;, &#x27;financial-media&#x27;, &#x27;official-documents&#x27;.</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>10</code></td><td>Max rows to return (default 10; max 50 for view=&#x27;compact&#x27;, 20 for view=&#x27;analytical&#x27;). The maxima are safety ceilings, not recommended values — start with the default and widen only if the discovery pass is not enough.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid.</td></tr><tr><td>query</td><td><code>str | None</code></td><td><code>None</code></td><td>Optional free-text search — fuzzy title match or full-text search over bullet points. Results are ranked by relevance when set.</td></tr><tr><td>tags</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Optional list of tags to filter by (e.g. [&quot;fed&quot;, &quot;macro&quot;]).</td></tr><tr><td>tag_match</td><td><code>str</code></td><td><code>&#x27;any&#x27;</code></td><td>How to match tags — &#x27;any&#x27; (default, OR) or &#x27;all&#x27; (AND).</td></tr><tr><td>view</td><td><code>str</code></td><td><code>&#x27;compact&#x27;</code></td><td>&#x27;compact&#x27; (default, discovery) or &#x27;analytical&#x27; (adds bounded scalar fields, bullets, tags, and omission markers). Unsupported values are rejected structurally.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Discover articles via lightweight stubs (phase 1 of two-phase retrieval).
+This is the default, preferred first tool for article discovery.
+
+view=&#x27;compact&#x27; (default): id, title, source, url, published_at, category,
+tags, has_summary — never thesis, bullets, or the full summary text. Max
+50 rows.
+view=&#x27;analytical&#x27;: title, thesis, and string bullets truncate with a visible
+suffix at 1,024 JSON-serialized bytes (UTF-8). Oversized source, sanitized url,
+published_at, and category values are omitted whole at 1,024 bytes;
+oversized individual tags are omitted at 128 bytes. Non-string collection
+members are dropped. The view keeps at most 3 bullets and 24 tags. Every
+row reports content_completeness and paired marker arrays:
+truncated_fields with truncated_omitted_serialized_bytes, omitted_fields
+with original omitted_serialized_bytes, and count_truncated_fields with
+omitted_item_counts. Omission markers are capped at 24 aligned pairs;
+marker_overflow and omitted_marker_pairs report any marker loss. Max 20
+rows — use get_article_bullets or
+get_article_detail on selected IDs for deeper reads instead of raising
+this limit.
+
+When N &gt;= 20 a warning is prepended suggesting aggregate_articles instead.
+A concrete narrow example: list_articles(since_days=3, category=&quot;Macro&quot;, limit=5).
+
+⚠ When query= is used, results are ordered by SIMILARITY not recency.
+Old articles may surface. A staleness warning is prepended automatically
+if any result is older than 7 days — do not ignore it.
+
+Args:
+    since_days: Days back from now (default 2). Ignored if date_from is set.
+    date_from: ISO date lower bound (YYYY-MM-DD) on published_at.
+    date_to: ISO date upper bound (YYYY-MM-DD) on published_at.
+    category: Filter by LLM category. Values: Macro, Policy, Equities,
+              Geopolitics, Noise.
+    source: Filter by source tag. Values: &#x27;gmail-substack&#x27;,
+            &#x27;financial-media&#x27;, &#x27;official-documents&#x27;.
+    limit: Max rows to return (default 10; max 50 for view=&#x27;compact&#x27;,
+           20 for view=&#x27;analytical&#x27;). The maxima are safety ceilings, not
+           recommended values — start with the default and widen only if
+           the discovery pass is not enough.
+    format: &#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;).
+              Defaults to UTC if omitted or invalid.
+    query: Optional free-text search — fuzzy title match or full-text
+           search over bullet points. Results are ranked by relevance
+           when set.
+    tags: Optional list of tags to filter by (e.g. [&quot;fed&quot;, &quot;macro&quot;]).
+    tag_match: How to match tags — &#x27;any&#x27; (default, OR) or &#x27;all&#x27; (AND).
+    view: &#x27;compact&#x27; (default, discovery) or &#x27;analytical&#x27; (adds bounded
+          scalar fields, bullets, tags, and omission markers). Unsupported
+          values are rejected structurally.</div></div>
+<div class="tool" id="tool-search_article_bullets"><h3>search_article_bullets</h3>
+<div class="sig">search_article_bullets(
+    query: str,
+    limit: int = 10,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>query</td><td><code>str</code></td><td><code>required</code></td><td>Plain words, no special syntax needed.</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>10</code></td><td>Max rows to return (default 10, max 20). Higher values are rejected with a structured error naming the cap.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Full-text search inside generated article bullet-points (phase 1 alternative).
+
+⚠ NOT FOR CURRENT CONTEXT — results are ranked by text-match relevance,
+not recency. Old articles will surface if they match the query. Always
+check published_at. Use list_articles (no query=) for recent-first results.
+
+Matching is English-stemmed full-text search over LLM-generated bullets,
+not verbatim source text — non-English or heavily paraphrased queries may
+under-match. Use for concept research across the archive, not live market
+monitoring.
+
+Returns the declared article_stubs shape. Every row includes
+content_completeness and the paired marker arrays truncated_fields with
+truncated_omitted_serialized_bytes, omitted_fields with omitted_serialized_bytes,
+and count_truncated_fields with omitted_item_counts. marker_overflow and
+omitted_marker_pairs report marker loss; this non-field-bounding search path
+emits full/empty/false/zero markers. Use get_article_bullets for cross-article fetching
+by ID. A concrete narrow example: search_article_bullets(query=&quot;rate cut&quot;,
+limit=10).
+
+Args:
+    query: Plain words, no special syntax needed.
+    limit: Max rows to return (default 10, max 20). Higher values are
+           rejected with a structured error naming the cap.
+    format: &#x27;toon&#x27; (default) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion.</div></div>
+<div class="tool" id="tool-get_article_bullets"><h3>get_article_bullets</h3>
+<div class="sig">get_article_bullets(
+    ids: list[int],
+    format: str = &#x27;toon&#x27;
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>ids</td><td><code>list[int]</code></td><td><code>required</code></td><td>List of article IDs (from list_articles results), at most 20 deduplicated IDs. Duplicates are collapsed before the bound check; an empty or over-limit list is rejected structurally.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Get enriched phase-2 snapshots for selected article IDs.
+
+Unlike list_articles stubs, this returns additional analytical fields
+(`sentiment`, `mechanisms`, `relevance_score`) while still avoiding the
+full summary blob. Use this after selecting candidate IDs from list_articles.
+
+Args:
+    ids: List of article IDs (from list_articles results), at most 20
+         deduplicated IDs. Duplicates are collapsed before the bound
+         check; an empty or over-limit list is rejected structurally.
+    format: &#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</div></div>
+<div class="tool" id="tool-get_article_detail"><h3>get_article_detail</h3>
+<div class="sig">get_article_detail(
+    article_id: int,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>article_id</td><td><code>int</code></td><td><code>required</code></td><td>ID of the article to retrieve.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Get the full analytical summary for one article (deep-dive, phase 3).
+
+Returns the complete analytical summary: thesis, bullets, category,
+sentiment, mechanisms, tags, relevance_score. Use only for one selected
+article whose bullet points are insufficient and a full analytical read
+is needed — for several candidates prefer get_article_bullets. The
+summary is generated analysis, not verbatim source text, and a retrieved
+article is not automatically current: check its publication date.
+
+Outcomes: a summarized article returns the analytical record with its own
+field bounds applied before the total ceiling. Title truncates with a visible
+suffix at 1,024 JSON-serialized bytes. An oversized sanitized url is omitted
+whole, with its original serialized byte size. The result reports
+content_completeness and paired markers: truncated_fields with
+truncated_omitted_serialized_bytes, omitted_fields with
+omitted_serialized_bytes, and count_truncated_fields with
+omitted_item_counts. marker_overflow and omitted_marker_pairs are always
+false and zero because detail omission markers are structurally bounded. A
+summary that remains oversized after these field bounds is rejected with
+its largest remaining leaf path and serialized byte size. An allowed
+article whose summary has not
+been produced yet returns {status: no_summary}; an unknown or withheld
+(content-blocked) article returns {status: not_found} with no further
+information either way.
+
+Args:
+    article_id: ID of the article to retrieve.
+    format: &#x27;toon&#x27; (default) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;).
+              Defaults to UTC if omitted or invalid.</div></div>
+<div class="tool" id="tool-aggregate_articles"><h3>aggregate_articles</h3>
+<div class="sig">aggregate_articles(
+    since_days: int = 2,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    category: str | None = None,
+    source: str | None = None,
+    tags: list[str] | None = None,
+    tag_match: str = &#x27;any&#x27;,
+    limit: int = 50
+) -&gt; dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>since_days</td><td><code>int</code></td><td><code>2</code></td><td>Days back from now (default 2). Ignored if date_from is set.</td></tr><tr><td>date_from</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date lower bound (YYYY-MM-DD) on published_at.</td></tr><tr><td>date_to</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date upper bound (YYYY-MM-DD) on published_at.</td></tr><tr><td>category</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by LLM category (Macro, Policy, Equities, Geopolitics, Noise).</td></tr><tr><td>source</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by source tag.</td></tr><tr><td>tags</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Optional list of tags to filter by (e.g. [&quot;fed&quot;, &quot;fomc&quot;]).</td></tr><tr><td>tag_match</td><td><code>str</code></td><td><code>&#x27;any&#x27;</code></td><td>How to match tags — &#x27;any&#x27; (default, OR) or &#x27;all&#x27; (AND).</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>50</code></td><td>Max articles to aggregate (default 50, max 100; higher values are rejected).</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Aggregate many articles into a deterministic bounded briefing.
+
+Use when the candidate set is too large to read article by article —
+returns per-article stubs (id, title, source, published_at, thesis,
+top bullets, tags), cross-article tag themes, and an as-of timestamp.
+Fully deterministic: no LLM synthesis in this tool, so nothing here is
+newly generated analysis. Note: article fields are read from stored
+LLM-generated summaries (see derives_from_generated_summaries). limit=100
+is a safety ceiling, not a recommended value. A concrete narrow example:
+aggregate_articles(since_days=3, category=&quot;Macro&quot;, limit=30).
+
+Args:
+    since_days: Days back from now (default 2). Ignored if date_from is set.
+    date_from: ISO date lower bound (YYYY-MM-DD) on published_at.
+    date_to: ISO date upper bound (YYYY-MM-DD) on published_at.
+    category: Filter by LLM category (Macro, Policy, Equities, Geopolitics, Noise).
+    source: Filter by source tag.
+    tags: Optional list of tags to filter by (e.g. [&quot;fed&quot;, &quot;fomc&quot;]).
+    tag_match: How to match tags — &#x27;any&#x27; (default, OR) or &#x27;all&#x27; (AND).
+    limit: Max articles to aggregate (default 50, max 100; higher values are rejected).</div></div>
+<div class="tool" id="tool-article_graph"><h3>article_graph</h3>
+<div class="sig">article_graph(
+    article_id: int,
+    limit: int = 10,
+    min_shared_tags: int = 1,
+    mmr_lambda: float = 0.7,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>article_id</td><td><code>int</code></td><td><code>required</code></td><td>Seed article ID (from list_articles results).</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>10</code></td><td>Max related articles to return (default 10, max 20).</td></tr><tr><td>min_shared_tags</td><td><code>int</code></td><td><code>1</code></td><td>Minimum tag overlap to include a result (default 1, max 20).</td></tr><tr><td>mmr_lambda</td><td><code>float</code></td><td><code>0.7</code></td><td>MMR balance (0-1 inclusive, default 0.7). 0=max diversity, 1=max relevance. Out-of-range values are rejected.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Find articles related to a given article by shared tags.
+
+Use after list_articles to expand context: pick a relevant seed article
+ID, then call article_graph to discover thematically connected articles
+without an additional search query. Relatedness is tag-based, not
+semantic similarity, so this is targeted expansion from a known good
+seed rather than broad discovery — a seed without tags yields little.
+
+Results balance relevance against diversity (MMR) to reduce
+near-duplicates from the same newsletter edition. Lower mmr_lambda =
+more diversity, higher = more relevance. A concrete narrow example:
+article_graph(article_id=12345, limit=10, min_shared_tags=2).
+
+Args:
+    article_id: Seed article ID (from list_articles results).
+    limit: Max related articles to return (default 10, max 20).
+    min_shared_tags: Minimum tag overlap to include a result (default 1,
+                     max 20).
+    mmr_lambda: MMR balance (0-1 inclusive, default 0.7). 0=max diversity,
+                1=max relevance. Out-of-range values are rejected.
+    format: &#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion.</div></div>
+<div class="tool" id="tool-progressive_article_search"><h3>progressive_article_search</h3>
+<div class="sig">progressive_article_search(
+    seed_query: str,
+    max_depth: int = 2,
+    max_articles: int = 10,
+    token_budget: int = 8000,
+    since_days: int = 7,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>seed_query</td><td><code>str</code></td><td><code>required</code></td><td>Initial search query (fuzzy title match).</td></tr><tr><td>max_depth</td><td><code>int</code></td><td><code>2</code></td><td>Maximum expansion iterations (default 2, max 3).</td></tr><tr><td>max_articles</td><td><code>int</code></td><td><code>10</code></td><td>Maximum articles to return (default 10, max 25).</td></tr><tr><td>token_budget</td><td><code>int</code></td><td><code>8000</code></td><td>Maximum total tokens for results (default 8000, max 20000).</td></tr><tr><td>since_days</td><td><code>int</code></td><td><code>7</code></td><td>How many days back to search (default 7, max 90).</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamps.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Progressive multi-hop article retrieval.
+
+Starts with a seed query, then expands through tag-related articles
+published within the same recency window as the seed. Simulates expert
+research: start with obvious matches, then follow the threads. Expansion
+is deliberately bounded by depth, article count, token budget, and
+recency window (hard ceilings: depth 3, 25 articles, 20000 tokens, 90
+days); results are ranked deterministically and deduplicated. The stop
+reason and effective controls are returned as response metadata.
+
+Use this when you need comprehensive context on a topic, not just recent
+articles. Results can include older material within the window — inspect
+publication dates and heed the prepended staleness warning. Deep-read the
+best candidates with get_article_detail, or run the ladder manually
+(list_articles -&gt; article_graph -&gt; get_article_bullets) for finer control.
+A concrete narrow example: progressive_article_search(seed_query=&quot;oil
+supply&quot;, max_depth=2, max_articles=10, since_days=7).
+
+Args:
+    seed_query: Initial search query (fuzzy title match).
+    max_depth: Maximum expansion iterations (default 2, max 3).
+    max_articles: Maximum articles to return (default 10, max 25).
+    token_budget: Maximum total tokens for results (default 8000, max 20000).
+    since_days: How many days back to search (default 7, max 90).
+    format: &#x27;toon&#x27; (default) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamps.</div></div>
+<div class="tool" id="tool-get_squawks"><h3>get_squawks</h3>
+<div class="sig">get_squawks(
+    hours_back: int | None = None,
+    received_from: str | None = None,
+    received_to: str | None = None,
+    before_received_at: str | None = None,
+    before_id: int | None = None,
+    limit: int = 25,
+    fields: list[str] | None = None,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None,
+    query: str | None = None
+) -&gt; str | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>hours_back</td><td><code>int | None</code></td><td><code>None</code></td><td>Lookback window ending at now; mutually exclusive with received_from/received_to. Unqueried lookbacks above 6h are rejected; with a query up to 168h (= 7 days) is allowed.</td></tr><tr><td>received_from</td><td><code>str | None</code></td><td><code>None</code></td><td>Exact inclusive window start (ISO-8601 with UTC offset, e.g. &#x27;2026-08-25T09:00:00Z&#x27;). Requires received_to.</td></tr><tr><td>received_to</td><td><code>str | None</code></td><td><code>None</code></td><td>Exact inclusive window end (ISO-8601 with UTC offset). Requires received_from.</td></tr><tr><td>before_received_at</td><td><code>str | None</code></td><td><code>None</code></td><td>Keyset cursor timestamp from the previous page&#x27;s next_cursor. Requires before_id AND the previous page&#x27;s exact applied_window as received_from/ received_to AND the previous page&#x27;s query repeated via query (&#x27;&#x27; if none).</td></tr><tr><td>before_id</td><td><code>int | None</code></td><td><code>None</code></td><td>Keyset cursor id from the previous page&#x27;s next_cursor. Requires before_received_at AND the previous page&#x27;s exact applied_window as received_from/received_to AND the previous page&#x27;s query repeated via query (&#x27;&#x27; if none).</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>25</code></td><td>Max rows per page (default 25, max 100).</td></tr><tr><td>fields</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Subset of fields to include. Valid: id, content, received_at, link.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for item timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid; never changes the canonical cursor/window.</td></tr><tr><td>query</td><td><code>str | None</code></td><td><code>None</code></td><td>Optional lexical keyword search over content (no stemming, multilingual-safe). Accepts quoted phrases, OR, and exclusion (-). Blank or whitespace-only strings are treated as no query.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Raw, source-facing market evidence from Telegram/Discord within a bounded
+window, optionally filtered by a keyword query.
+
+Matching is lexical, not semantic: no stemming, no fuzzy, no vector
+matching. Quoted phrases, OR, and exclusion (-) are accepted; a blank
+query applies no filter. An empty lexical result is NOT proof that a
+topic is absent — try synonyms or a wider window.
+
+Returns one page as an envelope: items, returned, has_more, next_cursor,
+and the exact applied_window. To fetch the next page, send back
+next_cursor&#x27;s two fields AND repeat the applied_window exactly as
+received_from/received_to AND repeat the previous page&#x27;s query verbatim
+via query (pass &quot;&quot; when the first page had none) — a cursor-only,
+relative-hours_back, or query-dropping continuation is rejected with a
+structured error because it re-anchors the window to now, silently drops
+rows near the original lower bound, or silently changes the result set
+mid-stream. Omitting all window arguments means the last 2 hours.
+Unqueried spans are capped at 6h and queried spans at 168h; the 100-row
+and window maxima are safety ceilings, not recommended values — start
+narrow. Pages are ordered received_at DESC then id DESC, so pagination is
+stable even when timestamps tie. A concrete narrow example:
+get_squawks(hours_back=2, query=&quot;fomc&quot;, limit=25).
+
+Use this tool when exact recent source-facing evidence matters (catalyst
+checks, raw quotes). For orientation or the processed market picture use
+get_squawk_context instead. Every row carries a received timestamp —
+check recency before quoting anything.
+
+Args:
+    hours_back: Lookback window ending at now; mutually exclusive with
+                received_from/received_to. Unqueried lookbacks above 6h
+                are rejected; with a query up to 168h (= 7 days) is
+                allowed.
+    received_from: Exact inclusive window start (ISO-8601 with UTC
+                   offset, e.g. &#x27;2026-08-25T09:00:00Z&#x27;). Requires
+                   received_to.
+    received_to: Exact inclusive window end (ISO-8601 with UTC offset).
+                 Requires received_from.
+    before_received_at: Keyset cursor timestamp from the previous page&#x27;s
+                        next_cursor. Requires before_id AND the previous
+                        page&#x27;s exact applied_window as received_from/
+                        received_to AND the previous page&#x27;s query repeated
+                        via query (&#x27;&#x27; if none).
+    before_id: Keyset cursor id from the previous page&#x27;s next_cursor.
+               Requires before_received_at AND the previous page&#x27;s exact
+               applied_window as received_from/received_to AND the
+               previous page&#x27;s query repeated via query (&#x27;&#x27; if none).
+    limit: Max rows per page (default 25, max 100).
+    fields: Subset of fields to include. Valid: id, content,
+            received_at, link.
+    format: &#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.
+    timezone: IANA timezone for item timestamp conversion (e.g.
+              &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid;
+              never changes the canonical cursor/window.
+    query: Optional lexical keyword search over content (no stemming,
+           multilingual-safe). Accepts quoted phrases, OR, and exclusion
+           (-). Blank or whitespace-only strings are treated as no query.</div></div>
+<div class="tool" id="tool-get_squawk_context"><h3>get_squawk_context</h3>
+<div class="sig">get_squawk_context(
+    mode: str = &#x27;latest&#x27;,
+    view: str = &#x27;dashboard&#x27;,
+    limit: int = 5,
+    session_date: str | None = None,
+    date_from: str | None = None,
+    fields: list[str] | None = None,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>mode</td><td><code>str</code></td><td><code>&#x27;latest&#x27;</code></td><td>&#x27;latest&#x27; (default) returns the single most-recent context row. &#x27;history&#x27; returns one row per session_date (distinct days). &#x27;date&#x27; returns context for a specific session_date (single row).</td></tr><tr><td>view</td><td><code>str</code></td><td><code>&#x27;dashboard&#x27;</code></td><td>Scope of processed_data fields returned — applies to every mode. &#x27;dashboard&#x27; (default) — overview prose + key_data items. &#x27;overview&#x27; — full analytical brief text only (self-contained). &#x27;key_data&#x27; — key market data points with symbol/value/dt. &#x27;themes&#x27; — session_themes causal bullet list. &#x27;topics&#x27; — list available topic/domain names for this context. &#x27;topic:&lt;name&gt;&#x27; — events_today filtered by domain name (e.g. &#x27;topic:Geopolitics&#x27;, &#x27;topic:Central Banks&#x27;). &#x27;theme_briefs&#x27; — full theme_briefs map + last_synthesis + input_completeness. &#x27;theme_briefs:&lt;section&gt;&#x27; — single-section brief. Sections: energies, economy_macro, rates_bonds, fx, geopolitics, equities. Unknown section returns {section, brief: None, available_sections: [...]}. &#x27;full&#x27; — entire processed payload, single-row deep inspection only (mode=&#x27;latest&#x27; or &#x27;date&#x27;); never available for mode=&#x27;history&#x27; — rejected there to keep history a bounded scoped list, not an unbounded per-row JSON dump.</td></tr><tr><td>limit</td><td><code>int</code></td><td><code>5</code></td><td>Max rows for mode=&#x27;history&#x27; (default 5, max 31).</td></tr><tr><td>session_date</td><td><code>str | None</code></td><td><code>None</code></td><td>Specific date to retrieve (mode=&#x27;date&#x27; only). Format: YYYY-MM-DD. Returns the final synthesis for that day.</td></tr><tr><td>date_from</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date lower bound (YYYY-MM-DD) on session_date for mode=&#x27;history&#x27;.</td></tr><tr><td>fields</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Subset of top-level row fields. Valid: id, session_date, last_updated, processed_data, total_squawks_processed, llm_model. Only applies to mode=&#x27;history&#x27;; ignored when view is set.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Processed, synthesized rolling market intelligence over recent squawks:
+overview, session themes, key data, and theme briefs.
+
+Best for orientation and the current market picture — this is NOT raw
+evidence. Inspect the freshness markers (synthesis time, age, stale
+flag) before calling any view current; a missing marker is not the same
+as fresh. Prefer a bounded view (dashboard, key_data, themes, one theme
+brief) before requesting the full payload. Validate important claims
+with get_squawks; if the view is stale or uncertain, fall back to raw
+squawks for the same window. A concrete narrow example:
+get_squawk_context(mode=&quot;latest&quot;, view=&quot;key_data&quot;).
+
+Args:
+    mode: &#x27;latest&#x27; (default) returns the single most-recent context row.
+          &#x27;history&#x27; returns one row per session_date (distinct days).
+          &#x27;date&#x27; returns context for a specific session_date (single row).
+    view: Scope of processed_data fields returned — applies to every mode.
+          &#x27;dashboard&#x27; (default) — overview prose + key_data items.
+          &#x27;overview&#x27;  — full analytical brief text only (self-contained).
+          &#x27;key_data&#x27;  — key market data points with symbol/value/dt.
+          &#x27;themes&#x27;    — session_themes causal bullet list.
+          &#x27;topics&#x27;    — list available topic/domain names for this context.
+          &#x27;topic:&lt;name&gt;&#x27; — events_today filtered by domain name
+                           (e.g. &#x27;topic:Geopolitics&#x27;, &#x27;topic:Central Banks&#x27;).
+          &#x27;theme_briefs&#x27; — full theme_briefs map + last_synthesis +
+                           input_completeness.
+          &#x27;theme_briefs:&lt;section&gt;&#x27; — single-section brief. Sections:
+                           energies, economy_macro, rates_bonds, fx,
+                           geopolitics, equities. Unknown section returns
+                           {section, brief: None, available_sections: [...]}.
+          &#x27;full&#x27;      — entire processed payload, single-row deep
+                        inspection only (mode=&#x27;latest&#x27; or &#x27;date&#x27;); never
+                        available for mode=&#x27;history&#x27; — rejected there to
+                        keep history a bounded scoped list, not an
+                        unbounded per-row JSON dump.
+    limit: Max rows for mode=&#x27;history&#x27; (default 5, max 31).
+    session_date: Specific date to retrieve (mode=&#x27;date&#x27; only).
+                  Format: YYYY-MM-DD. Returns the final synthesis for that day.
+    date_from: ISO date lower bound (YYYY-MM-DD) on session_date for
+               mode=&#x27;history&#x27;.
+    fields: Subset of top-level row fields. Valid: id, session_date,
+            last_updated, processed_data, total_squawks_processed, llm_model.
+            Only applies to mode=&#x27;history&#x27;; ignored when view is set.
+    format: &#x27;toon&#x27; (default) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;).
+              Defaults to UTC if omitted or invalid.</div></div>
+<div class="tool" id="tool-get_research"><h3>get_research</h3>
+<div class="sig">get_research(
+    view: str = &#x27;metadata&#x27;,
+    publisher: str | None = None,
+    tag: str | None = None,
+    series: str | None = None,
+    language: str | None = None,
+    query: str | None = None,
+    has_summary: bool | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    limit: int | None = None,
+    fields: list[str] | None = None,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | list[dict[str, Any]] | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>view</td><td><code>str</code></td><td><code>&#x27;metadata&#x27;</code></td><td>&#x27;metadata&#x27; (default) or &#x27;analytical&#x27;.</td></tr><tr><td>publisher</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by publisher name (exact match).</td></tr><tr><td>tag</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by tag — matches if tag is in the document&#x27;s tags array.</td></tr><tr><td>series</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by series name (exact match).</td></tr><tr><td>language</td><td><code>str | None</code></td><td><code>None</code></td><td>Filter by document language code (exact match).</td></tr><tr><td>query</td><td><code>str | None</code></td><td><code>None</code></td><td>Lexical substring match on title (case-insensitive). Ordering stays date-deterministic even when set.</td></tr><tr><td>has_summary</td><td><code>bool | None</code></td><td><code>None</code></td><td>True=only documents with LLM summary, False=unsummarized.</td></tr><tr><td>date_from</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date lower bound (YYYY-MM-DD) on doc_date.</td></tr><tr><td>date_to</td><td><code>str | None</code></td><td><code>None</code></td><td>ISO date upper bound (YYYY-MM-DD) on doc_date.</td></tr><tr><td>limit</td><td><code>int | None</code></td><td><code>None</code></td><td>Max rows to return. Defaults/max: metadata 20/50, analytical 10/10.</td></tr><tr><td>fields</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Subset of fields to include (view-specific allow-list).</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Discover formal research documents from institutional publishers
+(PDF-sourced). Bounded discovery surface — never a full deep read; use
+get_research_detail for a single selected document.
+
+view=&#x27;metadata&#x27; (default, max 50) returns document metadata plus
+has_summary/has_key_insights presence flags — never summary or
+key_insights content. view=&#x27;analytical&#x27; (max 10) additionally adds a
+bounded summary preview and the leading key_insights entries. Extracted
+content is DERIVED, not verbatim source text, and extraction quality
+varies with source layout. Check the document date and publisher before
+treating material as current. Licensing and source boundaries apply: the
+PDF text itself is not exposed, so preserve document identifiers for
+attribution. A concrete narrow example: get_research(publisher=&quot;Goldman
+Sachs&quot;, tag=&quot;rates&quot;, limit=10).
+
+Args:
+    view: &#x27;metadata&#x27; (default) or &#x27;analytical&#x27;.
+    publisher: Filter by publisher name (exact match).
+    tag: Filter by tag — matches if tag is in the document&#x27;s tags array.
+    series: Filter by series name (exact match).
+    language: Filter by document language code (exact match).
+    query: Lexical substring match on title (case-insensitive). Ordering
+           stays date-deterministic even when set.
+    has_summary: True=only documents with LLM summary, False=unsummarized.
+    date_from: ISO date lower bound (YYYY-MM-DD) on doc_date.
+    date_to: ISO date upper bound (YYYY-MM-DD) on doc_date.
+    limit: Max rows to return. Defaults/max: metadata 20/50, analytical
+           10/10.
+    fields: Subset of fields to include (view-specific allow-list).
+    format: &#x27;toon&#x27; (default, compact) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;).
+              Defaults to UTC if omitted or invalid.</div></div>
+<div class="tool" id="tool-get_research_detail"><h3>get_research_detail</h3>
+<div class="sig">get_research_detail(
+    document_id: str,
+    fields: list[str] | None = None,
+    format: str = &#x27;toon&#x27;,
+    timezone: str | None = None
+) -&gt; str | dict[str, Any]</div>
+<div class="tablewrap"><table class="api"><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Accepted values and behaviour</th></tr><tr><td>document_id</td><td><code>str</code></td><td><code>required</code></td><td>ID of the research document to retrieve.</td></tr><tr><td>fields</td><td><code>list[str] | None</code></td><td><code>None</code></td><td>Subset of fields. Valid: document_id, publisher, series, title, doc_date, tags, keywords, summary, key_insights, page_count, language, storage_provider.</td></tr><tr><td>format</td><td><code>str</code></td><td><code>&#x27;toon&#x27;</code></td><td>&#x27;toon&#x27; (default) or &#x27;json&#x27;.</td></tr><tr><td>timezone</td><td><code>str | None</code></td><td><code>None</code></td><td>IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;). Defaults to UTC if omitted or invalid.</td></tr></table></div>
+<div class="docstring-label">Exact tool description as published to clients</div>
+<div class="code">Get the full analytical record for one research document (deep-dive).
+
+Returns the complete document: summary and key_insights plus metadata.
+Use only for one selected document identified via get_research(view=
+&#x27;metadata&#x27;/&#x27;analytical&#x27;) — for browsing candidates prefer the discovery
+surface. The summary and key_insights are extracted/derived content, not
+verbatim source text; check the document date and publisher before
+treating material as current. The response is bounded to 384 KiB total
+(per-field and per-key_insight caps also apply); an over-cap request
+fails structurally rather than being silently truncated below the caps.
+
+Outcomes: a known document returns the full analytical record; an
+unknown document_id returns {status: not_found}.
+
+Args:
+    document_id: ID of the research document to retrieve.
+    fields: Subset of fields. Valid: document_id, publisher, series,
+            title, doc_date, tags, keywords, summary, key_insights,
+            page_count, language, storage_provider.
+    format: &#x27;toon&#x27; (default) or &#x27;json&#x27;.
+    timezone: IANA timezone for timestamp conversion (e.g. &#x27;Europe/Warsaw&#x27;).
+              Defaults to UTC if omitted or invalid.</div></div>
+</section>
+<section id="efficient"><div class="eyebrow">08 / EFFICIENT RETRIEVAL</div><h2>Save context by default</h2><ul><li>Start lists/searches around 10–25 items.</li><li>Use the narrowest relevant window.</li><li>Prefer TOON for inspection; JSON for typed processing.</li><li>Expand one dimension at a time.</li><li>Open full detail only after selection.</li></ul><div class="callout"><strong>Hard maxima are safety ceilings, not targets.</strong></div><p>Adaptive multi-row surfaces can return explicit partial pages: list/search bullets, selected bullets, article graph, progressive search, context history and research discovery. JSON and TOON are bounded independently and can fit different row counts.</p></section>
+<section id="errors"><div class="eyebrow">09 / ERRORS &amp; LIMITS</div><h2>Structured failure, bounded recovery</h2><p>Invalid scope, unsupported combinations, hard-limit violations and non-adaptive overflows reject structurally rather than silently changing the request.</p><div class="tablewrap"><table class="api"><tr><th>Class</th><th>Logical-body ceiling</th></tr><tr><td>health/guidance/compact discovery</td><td>65,536 bytes</td></tr><tr><td>standard bounded retrieval</td><td>131,072 bytes</td></tr><tr><td>progressive search</td><td>196,608 bytes</td></tr><tr><td>aggregation</td><td>204,800 bytes</td></tr><tr><td>deep reads / processed context</td><td>393,216 bytes</td></tr></table></div><p>These ceilings apply before MCP transport framing. The wire envelope is larger. TOON is compact inspection format; request JSON when typed composite processing matters.</p></section>
+<section id="compat"><div class="eyebrow">10 / CLIENT NOTES</div><h2>Access and compatibility</h2><div class="tablewrap"><table class="api"><tr><th>Property</th><th>Contract</th></tr><tr><td>Transport</td><td>Streamable HTTP</td></tr><tr><td>Endpoint</td><td><code>/feeder/mcp</code></td></tr><tr><td>Authentication</td><td><code>X-API-Key</code></td></tr><tr><td>Rate limit</td><td>10 req/s, burst 50</td></tr><tr><td>Version</td><td><code>serverInfo.version</code> / <code>tool_health_check().version</code></td></tr></table></div><p>The final release reports <code>0.3.2</code>. <code>get_articles</code> remains deprecated for one compatibility period.</p></section>
+<section id="changes"><div class="eyebrow">11 / RELEASE NOTES</div><h2>What changed in v0.3.2</h2><ul><li>Smaller, bounded squawk defaults with exact windows and stable pagination.</li><li>Compact/analytical article discovery and progressive deepening.</li><li><code>get_research_detail</code> for selected institutional research.</li><li>Truthful partial pages and explicit completeness markers.</li><li>Request-path-aware recovery guidance.</li><li>TOON row/column framing hardening.</li><li>Machine-checked public description/schema parity.</li><li>Runtime version discriminator.</li></ul></section>
+<section id="acceptance"><div class="eyebrow">12 / PAYLOAD &amp; RELEASE ACCEPTANCE</div><h2>Release evidence belongs at the bottom</h2><p>The release branch is based on accepted source <code>188d0d6a2e6fe576f65369ea355976eaa9d802d0</code>. Qualification records logical JSON/TOON bytes separately from the production Streamable HTTP/MCP envelope, bound to exact source and dependency versions.</p><p>Measurements use production behavior, legal persisted shapes, frozen clocks where required, real middleware/HTTP framing, maximum-page lookahead metadata, and fail when expected cases disappear or a served body exceeds its ceiling.</p><div class="code">accepted source
+→ v0.3.2 tag / GitHub release
+→ exact image/provenance
+→ authorized deployment
+→ public MCP smoke
+→ deployed payload/freshness/telemetry verification
+→ canonical current-guide promotion</div></section>
+<section id="limits"><div class="eyebrow">13 / KNOWN LIMITS</div><h2>What this guide does not hide</h2><ul><li>Squawk search is lexical, not semantic.</li><li>Search-ranked article results are not necessarily recent-first.</li><li>Generated analysis is derived, not verbatim source text.</li><li>TOON is not typed composite serialization.</li><li>Pathological deep reads can still reject after field bounding.</li><li>Exact continuation is not claimed where relevance/tie ordering cannot be preserved safely.</li><li>Service health is not intelligence freshness.</li></ul></section>
+<section id="quick"><div class="eyebrow">14 / QUICK REFERENCE</div><h2>Four lines to remember</h2><div class="code">CURRENT MARKET
+get_squawk_context(view="dashboard")
+→ get_squawks(query=..., limit=10–25) when evidence is needed
+
+ARTICLE RESEARCH
+list_articles(query=..., limit=10)
+→ get_article_bullets(ids=[...])
+→ get_article_detail(article_id=...)
+
+INSTITUTIONAL RESEARCH
+get_research(query=..., limit=10, view="metadata")
+→ get_research_detail(document_id=...)
+
+OPERATING POLICY
+get_capability_guide()</div><div class="callout"><strong>Start narrow. Check freshness. Preserve evidence. Deepen deliberately.</strong></div></section>
+<footer>Darth Feedor v0.3.2 · Mercury Intelligence · canonical user &amp; MCP API guide</footer></main><aside class="toc"><h3>ON THIS PAGE</h3><a href="#overview">Overview</a><a href="#what">01 Capabilities</a><a href="#start">02 Start here</a><a href="#mental">03 Mental model</a><a href="#workflows">04 Workflows</a><a href="#freshness">05 Freshness</a><a href="#map">06 Capability map</a><a href="#api">07 API reference</a><a href="#efficient">08 Efficient retrieval</a><a href="#errors">09 Errors &amp; limits</a><a href="#compat">10 Client notes</a><a href="#changes">11 What changed</a><a href="#acceptance">12 Release acceptance</a><a href="#limits">13 Known limits</a><a href="#quick">14 Quick reference</a></aside></div></body></html>

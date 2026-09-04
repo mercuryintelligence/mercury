@@ -42,8 +42,10 @@ jobs:
           set -euo pipefail
           cfg=()
           [ ! -f .gitleaks.toml ] || cfg=(--config .gitleaks.toml)
+          base=()
+          [ ! -f .gitleaks.baseline.json ] || base=(--baseline-path .gitleaks.baseline.json)
           if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
-            "$RUNNER_TEMP/gitleaks-bin" git --log-opts '${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}' --redact "${cfg[@]}" --no-banner .
+            "$RUNNER_TEMP/gitleaks-bin" git --log-opts '${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}' --redact "${cfg[@]}" "${base[@]}" --no-banner .
           else
-            "$RUNNER_TEMP/gitleaks-bin" git --redact "${cfg[@]}" --no-banner .
+            "$RUNNER_TEMP/gitleaks-bin" git --redact "${cfg[@]}" "${base[@]}" --no-banner .
           fi
