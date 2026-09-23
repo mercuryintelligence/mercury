@@ -349,6 +349,3 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>** ([a9ef103](https://g
 - **Add git-cliff config and changelog** ([84167fc](https://github.com/mercuryintelligence/terminalbeta/commit/84167fc1bafe6205b31cf25846c50b940c425cc6)) — 2026-07-14 00:55
 
   Generic type-based parsers; repo-specific scopes to be tuned (see P0 bead).
-
-
-
