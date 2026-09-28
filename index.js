@@ -33,7 +33,7 @@ const prompt = (question) => new Promise((resolve) => rl.question(question, (a) 
 const IS_WINDOWS = process.platform === 'win32';
 
 // npm installs Claude Code on Windows as claude.cmd, which Node only runs through a shell.
-// ponytail: cmd-style quoting covers our args (no & | < > ^ % !); revisit if an arg ever carries them.
+// ponytail: cmd-style quoting covers our args (no & | < > ^ % !, no trailing backslash); revisit if an arg ever does.
 function spawnClaude(args) {
   return IS_WINDOWS
     ? spawnSync('claude', args.map((a) => (/[\s"]/.test(a) ? `"${a.replace(/"/g, '\\"')}"` : a)), {
