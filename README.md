@@ -74,7 +74,7 @@ the client asks.
 
 ### `using-mercury` — Session Onboarding + Workflow Hub *(load at session start)*
 
-Maps the Mercury tools, explains when to use each, and includes an internal workflow router for Morning Brief, Market Scan, Instrument Deep Dive, Rates/STIR, PubFinance, News/Newsletter Research, and cross-domain `run_analysis` work. The plugins install it for Claude Code and Codex; Claude Desktop and claude.ai use the packaged [using-mercury.skill](https://docs.mercuryintelligence.net/api/docs/downloads/using-mercury.skill), built from `skills/using-mercury.skill` here.
+Maps the Mercury tools, explains when to use each, and includes an internal workflow router for Morning Brief, Market Scan, Instrument Deep Dive, Rates/STIR, PubFinance, News/Newsletter Research, and cross-domain `run_analysis` work. The plugins install it for Claude Code and Codex; Claude Desktop and claude.ai use the packaged [using-mercury.skill](https://docs.mercuryintelligence.net/api/docs/downloads/using-mercury.skill), the same file as `skills/using-mercury.skill` in this repository.
 
 It also includes reference files:
 
