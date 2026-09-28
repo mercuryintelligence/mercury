@@ -15,9 +15,9 @@ Use this page when Claude cannot see Mercury tools or the server does not respon
 
 ### Checks
 
-1. Confirm one server named `mercury` points at `https://mcp.mercuryintelligence.net/mcp` (`claude mcp list` in Claude Code, **Settings → Connectors** in Claude Desktop).
+1. Confirm one Mercury server points at `https://mcp.mercuryintelligence.net/mcp` (`claude mcp list` in Claude Code, `codex mcp list` in Codex, **Settings → Connectors** in Claude Desktop).
 2. Restart the client after changing MCP config.
-3. Confirm you are signed in: in Claude Code run `/mcp` and check `mercury`; in Claude Desktop the connector shows as connected.
+3. Confirm you are signed in: in Claude Code run `/mcp` and check the Mercury server; in Claude Desktop the connector shows as connected.
 4. Run the relevant health check tool.
 
 ### Common causes
@@ -25,7 +25,7 @@ Use this page when Claude cannot see Mercury tools or the server does not respon
 - Client was not restarted after install.
 - Sign-in not completed, or the session expired.
 - Project/user scope mismatch in Claude Code.
-- Servers from the old four-server setup (`mercury-market-data`, `mercury-darth-feedor`, `mercury-econ-data`, `mercury-pubfinance`) are still configured. Rerun `npx @mercuryintelligence/mercury` and let it remove them.
+- Servers from the old four-server setup (`mercury-market-data`, `mercury-darth-feedor`, `mercury-econ-data`, `mercury-pubfinance`) are still configured. Remove them with `claude mcp remove <name>`.
 
 ### Related
 
@@ -43,9 +43,10 @@ Mercury uses OAuth. Your client opens the Mercury sign-in in the browser and sto
 
 ### Fixes
 
-- Claude Code: run `/mcp`, select `mercury`, and choose **Authenticate** (or **Re-authenticate**).
+- Claude Code: run `/mcp`, select the Mercury server, and choose **Authenticate** (or **Re-authenticate**).
+- Codex: run `codex mcp login mercury`.
 - Claude Code: if sign-in never returns to the terminal, check that nothing else is listening on local port 8766, then retry.
-- Claude Code: if you added the server by hand and sign-in keeps failing, remove it and rerun `npx @mercuryintelligence/mercury`.
+- Claude Code: if you added the server by hand and sign-in keeps failing, remove it and install the Mercury plugin instead (`/plugin install mercury@mercury`).
 - Claude Desktop: open **Settings → Connectors**, disconnect Mercury, and connect again.
 - Confirm your Mercury account has access to Mercury data.
 

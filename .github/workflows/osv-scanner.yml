@@ -37,7 +37,7 @@ jobs:
           fi
           git diff --no-renames --name-only --diff-filter=ACMRD \
             '${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}' > changed.txt
-          if grep -Eq '^(package\.json|package-lock\.json|ext/mercury-platform/package\.json|ext/mercury-platform/package-lock\.json)$' changed.txt; then
+          if grep -Eq '(^|/)(package\.json|package-lock\.json)$' changed.txt; then
             echo 'run=true' >> "$GITHUB_OUTPUT"
           else
             echo 'run=false' >> "$GITHUB_OUTPUT"
@@ -49,4 +49,5 @@ jobs:
         with:
           scan-args: |-
             --recursive
+            --allow-no-lockfiles
             ./

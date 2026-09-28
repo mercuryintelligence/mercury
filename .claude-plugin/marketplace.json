@@ -1,0 +1,15 @@
+{
+  "name": "mercury",
+  "owner": {
+    "name": "Mercury Intelligence",
+    "url": "https://mercuryintelligence.net"
+  },
+  "description": "Mercury Intelligence plugins for Claude Code",
+  "plugins": [
+    {
+      "name": "mercury",
+      "source": "./plugins/mercury",
+      "description": "Mercury market intelligence: the Mercury MCP server (OAuth sign-in) and the Using Mercury skill"
+    }
+  ]
+}

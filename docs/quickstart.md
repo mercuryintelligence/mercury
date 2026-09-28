@@ -108,27 +108,17 @@ A healthy setup should describe market data, econ data, news/research, and PubFi
 
 ## Install on Claude Code
 
-Use the installer if you run Claude Code in a terminal. It adds the one Mercury server; Claude Code
-then signs you in and keeps the session.
-
-### Before you begin
-
-- Node.js 18 or newer.
-- Claude Code CLI installed.
+Install the Mercury plugin. It adds the Mercury server and the Using Mercury skill in one step;
+Claude Code then signs you in and keeps the session.
 
 ### Install
 
-```bash
-npx @mercuryintelligence/mercury
+```text
+/plugin marketplace add mercuryintelligence/mercury
+/plugin install mercury@mercury
 ```
 
-The installer will:
-
-1. Ask for user or project scope.
-2. Offer to remove servers left over from the old four-server setup.
-3. Add one server named `mercury` at `https://mcp.mercuryintelligence.net/mcp`.
-
-Then start `claude`, run `/mcp`, select **mercury**, and choose **Authenticate** to sign in.
+Then run `/mcp`, select the Mercury server, and choose **Authenticate** to sign in.
 
 ### Verify
 
@@ -136,14 +126,15 @@ Then start `claude`, run `/mcp`, select **mercury**, and choose **Authenticate**
 claude mcp list
 ```
 
-You should see `mercury` connected. If it shows as needing authentication, repeat the `/mcp` sign-in.
+You should see the Mercury server at `https://mcp.mercuryintelligence.net/mcp` as connected. If it
+shows as needing authentication, repeat the `/mcp` sign-in.
 
 ### Skills
 
-Start with the canonical skill:
+The plugin installs the canonical skill as:
 
 ```text
-/using-mercury
+/mercury:using-mercury
 ```
 
 Specialized `mercury-*` skills are workflow shortcuts for Claude Code. They should not replace the public Desktop guidance; `/using-mercury` remains the universal entry point.
@@ -154,6 +145,16 @@ Specialized `mercury-*` skills are workflow shortcuts for Claude Code. They shou
 - [[troubleshooting|MCP connection issues]]
 - [[troubleshooting|Sign-in issues]]
 
+
+## Install on Codex
+
+```bash
+codex plugin marketplace add mercuryintelligence/mercury
+codex plugin add mercury@mercury
+codex mcp login mercury
+```
+
+Start a new Codex session so the Mercury server and the Using Mercury skill load.
 
 ## Skills and workflow shortcuts
 

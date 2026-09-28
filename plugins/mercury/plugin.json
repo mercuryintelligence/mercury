@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mercury",
+  "version": "2.0.0",
+  "description": "Mercury market intelligence: the Mercury MCP server (OAuth sign-in) and the Using Mercury skill",
+  "author": {
+    "name": "Mercury Intelligence",
+    "url": "https://mercuryintelligence.net"
+  },
+  "homepage": "https://mercuryintelligence.net",
+  "repository": "https://github.com/mercuryintelligence/mercury",
+  "license": "MIT",
+  "keywords": [
+    "markets",
+    "finance",
+    "trading",
+    "mcp"
+  ]
+}

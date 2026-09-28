@@ -1,0 +1,20 @@
+{
+  "name": "mercury",
+  "interface": {
+    "displayName": "Mercury Intelligence"
+  },
+  "plugins": [
+    {
+      "name": "mercury",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mercury"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    }
+  ]
+}

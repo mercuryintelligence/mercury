@@ -46,8 +46,8 @@ jobs:
           run_package=false
           while IFS= read -r path; do
             case "$path" in
+              plugins/*|.claude-plugin/*|.agents/plugins/*|skills/*|scripts/*|.github/workflows/*) run_package=true ;;
               *.md|docs/*|.beads/*|.specialists/*|.xtrm/*|.claude/skills/*) ;;
-              index.js|servers.json|package.json|package-lock.json|ext/*|.github/workflows/*) run_package=true ;;
               *) run_package=true ;; # unknown fails safe
             esac
           done < changed.txt
@@ -55,7 +55,7 @@ jobs:
           cat changed.txt
 
   package:
-    name: Installer & extension contract
+    name: Plugin & marketplace contract
     needs: scope
     if: needs.scope.outputs.run_package == 'true'
     runs-on: ubuntu-latest
@@ -65,48 +65,51 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Set up Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '22'
-          cache: npm
-          package-manager-cache: false
-      - name: Install root package
-        run: npm ci
-      - name: Syntax-check installer and proxy
-        run: |
-          node --check index.js
-          node --check ext/mercury-platform/server/index.mjs
-      - name: Validate JSON contracts
+      - name: Validate plugin manifests
         run: |
           node - <<'NODE'
           const fs = require('fs');
-          const servers = JSON.parse(fs.readFileSync('servers.json', 'utf8'));
-          const root = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-          const manifest = JSON.parse(fs.readFileSync('ext/mercury-platform/manifest.json', 'utf8'));
-          if (!Array.isArray(servers) || servers.length !== 1) throw new Error('servers.json must hold exactly one server');
-          const names = new Set();
-          for (const server of servers) {
-            for (const key of ['name','label','description','url','transport']) if (!server[key]) throw new Error(`missing ${key}`);
-            if (names.has(server.name)) throw new Error(`duplicate server ${server.name}`);
-            names.add(server.name);
-            const url = new URL(server.url);
-            if (url.protocol !== 'https:') throw new Error(`non-HTTPS server URL: ${server.url}`);
-            if (server.transport !== 'http') throw new Error(`unexpected transport for ${server.name}`);
-            if (!server.oauth?.clientId) throw new Error(`missing oauth.clientId for ${server.name}`);
-            if (server.headers) throw new Error(`${server.name} must authenticate with OAuth, not headers`);
+          const read = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const fail = (m) => { throw new Error(m); };
+          const root = 'plugins/mercury';
+          const claudeMarket = read('.claude-plugin/marketplace.json');
+          const codexMarket = read('.agents/plugins/marketplace.json');
+          const claudePlugin = read(`${root}/.claude-plugin/plugin.json`);
+          const codexPlugin = read(`${root}/plugin.json`);
+          const claudeMcp = read(`${root}/.mcp.json`).mcpServers;
+          const codexMcp = read(`${root}/mcp.json`).mcpServers;
+
+          // Install ids are <entry>@<marketplace>; entry and manifest names must match.
+          for (const [label, name] of [
+            ['claude marketplace', claudeMarket.name], ['codex marketplace', codexMarket.name],
+            ['claude entry', claudeMarket.plugins?.[0]?.name], ['codex entry', codexMarket.plugins?.[0]?.name],
+            ['claude plugin', claudePlugin.name], ['codex plugin', codexPlugin.name],
+          ]) if (name !== 'mercury') fail(`${label} name must be "mercury", got ${name}`);
+          if (claudeMarket.plugins[0].source !== `./${root}`) fail('claude marketplace source path');
+          if (codexMarket.plugins[0].source?.path !== `./${root}`) fail('codex marketplace source path');
+          if (claudePlugin.version !== codexPlugin.version) fail('claude and codex plugin versions differ');
+
+          // One OAuth server. No headers means no API key can creep back in.
+          for (const [label, servers] of [['claude', claudeMcp], ['codex', codexMcp]]) {
+            const names = Object.keys(servers || {});
+            if (names.length !== 1 || names[0] !== 'mercury') fail(`${label} must declare exactly one server "mercury"`);
+            const s = servers.mercury;
+            if (s.headers) fail(`${label} server must use OAuth, not headers`);
+            if (new URL(s.url).href !== 'https://mcp.mercuryintelligence.net/mcp') fail(`${label} server url ${s.url}`);
           }
-          if (!root.bin?.['mercury-connect']) throw new Error('package bin contract missing');
-          // quant already installs a `mercury` executable; ours must never shadow it.
-          if ('mercury' in root.bin) throw new Error('package must not ship a `mercury` bin');
-          if (root.dependencies && Object.keys(root.dependencies).length) throw new Error('installer must have no runtime dependencies');
-          if (!manifest || typeof manifest !== 'object') throw new Error('extension manifest invalid');
-          console.log(`validated ${servers.length} server entries`);
+          if (claudeMcp.mercury.type !== 'http' || !claudeMcp.mercury.oauth?.clientId) fail('claude server needs type http and oauth.clientId');
+          // The portable Agent Plugins schema is strict: extra keys make Codex drop the server.
+          const extra = Object.keys(codexMcp.mercury).filter((k) => !['type', 'url'].includes(k));
+          if (extra.length) fail(`codex server has unsupported keys: ${extra}`);
+
+          if (!fs.existsSync(`${root}/skills/using-mercury/SKILL.md`)) fail('using-mercury skill missing from plugin');
+          console.log(`validated plugin mercury ${claudePlugin.version}`);
           NODE
-      - name: Verify packaged artifacts are present
+      - name: Packaged skill matches source
         run: |
-          test -s ext/mercury-platform/mercury-platform.mcpb
-          npm pack --dry-run >/dev/null
+          cp skills/using-mercury.skill /tmp/committed.skill
+          bash scripts/build-skill.sh
+          cmp skills/using-mercury.skill /tmp/committed.skill
 
   gate:
     name: ci/gate

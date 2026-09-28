@@ -12,8 +12,8 @@ description: >
 
 # Releasing the Mercury Platform (mercuryintelligence/mercury)
 
-This repo publishes the user-facing Mercury Platform: the installer
-(`@mercuryintelligence/mercury` on npm), the Claude Desktop extension, and the public docs in
+This repo publishes the user-facing Mercury Platform: the `mercury`
+plugin for Claude Code and Codex, the packaged Using Mercury skill, and the public docs in
 `docs/`. Releases cut here are what users and beta testers see.
 
 ## What the agent is and is not responsible for
@@ -36,8 +36,11 @@ This repo publishes the user-facing Mercury Platform: the installer
 2. **Update `CHANGELOG.md`**: move the relevant entries out of `[Unreleased]`
    into a dated `## [x.y.z] - YYYY-MM-DD` section. Keep the keep-a-changelog
    shape already used in this file.
-3. **Bump `package.json` `version`** to match, and update any lockfile the
-   repo tracks (`package-lock.json`).
+3. **Bump the plugin `version`** to match in both
+   `plugins/mercury/.claude-plugin/plugin.json` and `plugins/mercury/plugin.json`
+   (CI requires them equal). Installed plugins stay on their version until it
+   changes. If the skill changed, rebuild `skills/using-mercury.skill` with
+   `scripts/build-skill.sh` (CI checks it matches the source).
 4. **Open and merge** the version/changelog change on a branch, or fold it
    into the release PR, per repo convention. The release tag must point at the
    merged commit.
@@ -47,10 +50,6 @@ This repo publishes the user-facing Mercury Platform: the installer
    fires `.github/workflows/discord-release-announce.yml`, which posts the
    body to the Discord webhook (`DISCORD_RELEASE_WEBHOOK_URL` secret). Check
    the workflow run succeeded, or re-run it if the webhook was down.
-   The same event fires `.github/workflows/publish.yml`, which publishes
-   `@mercuryintelligence/mercury` to npm with provenance (`NPM_TOKEN`
-   secret; the tag must equal `v` + the `package.json` version). Check the
-   run and `npm view @mercuryintelligence/mercury version`.
 
 ## Independent versioning — never mirror
 
@@ -58,8 +57,8 @@ Each Mercury repository versions independently. This repo does NOT mirror
 the version of darth-feedor or any other upstream repo. A release here
 that surfaces upstream work carries **this repo's own next version**.
 
-- Current published version: read `package.json`.
-- Patch bump (default): bug fixes, doc updates, installer/ext fixes.
+- Current published version: read `plugins/mercury/.claude-plugin/plugin.json`.
+- Patch bump (default): bug fixes, doc updates, plugin fixes.
 - Minor bump: new user-visible capability or a notable platform step.
 - Major bump: breaking install/usage change.
 
@@ -85,8 +84,10 @@ paragraph or a tight bullet list is enough.
 
 ## How to get it
 
-One line on how existing users update (reinstall the extension / re-run the
-installer; the extension update flow if one exists).
+One line on how existing users update (Claude Code: `claude plugin marketplace
+update mercury` then `claude plugin update mercury@mercury`; Codex:
+`codex plugin marketplace upgrade mercury`; Desktop: re-upload the skill if it
+changed).
 
 ## Links
 
