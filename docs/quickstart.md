@@ -83,7 +83,7 @@ your Mercury account, and Claude keeps the session. There is no API key.
 
 ### Skills
 
-Upload `using-mercury.skill` under **Settings → Capabilities → Skills**, then invoke it as:
+Download [using-mercury.skill](https://docs.mercuryintelligence.net/api/docs/downloads/using-mercury.skill) and upload it under **Settings → Capabilities → Skills**, then invoke it as:
 
 ```text
 /using-mercury

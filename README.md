@@ -56,7 +56,7 @@ Mercury skill load.
 1. Open **Settings → Connectors** and choose **Add custom connector**.
 2. Name it **Mercury** and paste `https://mcp.mercuryintelligence.net/mcp`.
 3. Click **Connect** and sign in with your Mercury account.
-4. Add the skill: upload `skills/using-mercury.skill` from this repository under
+4. Add the skill: download [using-mercury.skill](https://docs.mercuryintelligence.net/api/docs/downloads/using-mercury.skill) and upload it under
    **Settings → Capabilities → Skills**.
 
 Claude handles the sign-in and stores the session.
@@ -74,7 +74,7 @@ the client asks.
 
 ### `using-mercury` — Session Onboarding + Workflow Hub *(load at session start)*
 
-Maps the Mercury tools, explains when to use each, and includes an internal workflow router for Morning Brief, Market Scan, Instrument Deep Dive, Rates/STIR, PubFinance, News/Newsletter Research, and cross-domain `run_analysis` work. The plugins install it for Claude Code and Codex; Claude Desktop and claude.ai use the packaged `skills/using-mercury.skill`.
+Maps the Mercury tools, explains when to use each, and includes an internal workflow router for Morning Brief, Market Scan, Instrument Deep Dive, Rates/STIR, PubFinance, News/Newsletter Research, and cross-domain `run_analysis` work. The plugins install it for Claude Code and Codex; Claude Desktop and claude.ai use the packaged [using-mercury.skill](https://docs.mercuryintelligence.net/api/docs/downloads/using-mercury.skill), built from `skills/using-mercury.skill` here.
 
 It also includes reference files:
 
