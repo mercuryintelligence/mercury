@@ -45,7 +45,7 @@ Mercury uses OAuth. Your client opens the Mercury sign-in in the browser and sto
 
 - Claude Code: run `/mcp`, select the Mercury server, and choose **Authenticate** (or **Re-authenticate**).
 - Codex: run `codex mcp login mercury`.
-- Claude Code: if sign-in never returns to the terminal, check that nothing else is listening on local port 8766, then retry.
+- Claude Code: if sign-in never returns to the terminal, close other apps that might hold local ports (for example a second sign-in in progress), then retry.
 - Claude Code: if you added the server by hand and sign-in keeps failing, remove it and install the Mercury plugin instead (`/plugin install mercury@mercury`).
 - Claude Desktop: open **Settings → Connectors**, disconnect Mercury, and connect again.
 - Confirm your Mercury account has access to Mercury data.
