@@ -30,12 +30,27 @@ const prompt = (question) => new Promise((resolve) => rl.question(question, (a) 
 
 // ── Claude Code CLI helpers ───────────────────────────────────────────────────
 
+const IS_WINDOWS = process.platform === 'win32';
+
+// npm installs Claude Code on Windows as claude.cmd, which Node only runs through a shell.
+// ponytail: cmd-style quoting covers our args (no & | < > ^ % !); revisit if an arg ever carries them.
+function spawnClaude(args) {
+  return IS_WINDOWS
+    ? spawnSync('claude', args.map((a) => (/[\s"]/.test(a) ? `"${a.replace(/"/g, '\\"')}"` : a)), {
+        encoding: 'utf8', stdio: 'pipe', shell: true,
+      })
+    : spawnSync('claude', args, { encoding: 'utf8', stdio: 'pipe' });
+}
+
 function claude(args) {
   if (DRY_RUN) {
     console.log(dim('    [dry-run] ') + ['claude', ...args.map(quote)].join(' '));
     return { ok: true };
   }
-  const result = spawnSync('claude', args, { encoding: 'utf8', stdio: 'pipe' });
+  const result = spawnClaude(args);
+  if (result.error?.code === 'ENOENT') {
+    return { ok: false, error: 'Claude Code CLI not found on PATH. Install it from https://code.claude.com' };
+  }
   return result.status === 0
     ? { ok: true }
     : { ok: false, error: (result.error?.message || result.stderr || result.stdout || '').trim() };
@@ -45,9 +60,9 @@ function quote(arg) {
   return /^[\w@%+=:,./-]+$/.test(arg) ? arg : `'${arg.replace(/'/g, `'\\''`)}'`;
 }
 
+// Read-only, so it runs in --dry-run too and the preview shows the legacy cleanup.
 function serverExists(name) {
-  if (DRY_RUN) return false;
-  return spawnSync('claude', ['mcp', 'get', name], { stdio: 'pipe' }).status === 0;
+  return spawnClaude(['mcp', 'get', name]).status === 0;
 }
 
 function removeServer(name) {
