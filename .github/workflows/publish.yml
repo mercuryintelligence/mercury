@@ -1,0 +1,42 @@
+name: Publish to npm
+
+# Publishes @mercuryintelligence/mercury with npm provenance when a GitHub
+# Release is published (the releasing skill creates tag vX.Y.Z with it).
+# Requires the repo secret NPM_TOKEN (npm automation token for the
+# @mercuryintelligence scope). The tag must match package.json's version.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write # npm provenance attestation
+
+jobs:
+  publish:
+    name: npm publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: Check tag matches package version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          version="v$(node -p "require('./package.json').version")"
+          [ "$RELEASE_TAG" = "$version" ] || { echo "tag $RELEASE_TAG != package $version"; exit 1; }
+      - run: npm ci
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public

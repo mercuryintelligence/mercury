@@ -1,76 +1,70 @@
 ---
 title: Mercury Troubleshooting
-description: Fix MCP connection, API key, Desktop extension, and stale-data issues.
+description: Fix MCP connection, sign-in, Desktop connector, and stale-data issues.
 nav_order: 6
 publish: true
 ---
 
 # Mercury Troubleshooting
 
-Use this page when Mercury tools are missing, authentication fails, Desktop extension install is unclear, or data appears stale.
+Use this page when Mercury tools are missing, sign-in fails, the Claude Desktop connector does not connect, or data appears stale.
 
 ## MCP connection issues
 
-Use this page when Claude cannot see Mercury tools or a server does not respond.
+Use this page when Claude cannot see Mercury tools or the server does not respond.
 
 ### Checks
 
-1. Confirm the server is installed.
-2. Restart Claude or Pi after changing MCP config.
-3. Check that the API key header is present.
+1. Confirm one server named `mercury` points at `https://mcp.mercuryintelligence.net/mcp` (`claude mcp list` in Claude Code, **Settings → Connectors** in Claude Desktop).
+2. Restart the client after changing MCP config.
+3. Confirm you are signed in: in Claude Code run `/mcp` and check `mercury`; in Claude Desktop the connector shows as connected.
 4. Run the relevant health check tool.
-
-Expected servers:
-
-- `mercury-market-data`
-- `mercury-darth-feedor`
-- `mercury-econ-data`
-- `mercury-pubfinance`
 
 ### Common causes
 
 - Client was not restarted after install.
-- API key missing or invalid.
+- Sign-in not completed, or the session expired.
 - Project/user scope mismatch in Claude Code.
-- Old MCP session after server restart.
+- Servers from the old four-server setup (`mercury-market-data`, `mercury-darth-feedor`, `mercury-econ-data`, `mercury-pubfinance`) are still configured. Rerun `npx @mercuryintelligence/mercury` and let it remove them.
 
 ### Related
 
-[[troubleshooting|API key issues]]
+[[troubleshooting|Sign-in issues]]
 
-## API key issues
+## Sign-in issues
 
-All Mercury MCP servers require the same API key via the `X-API-Key` header.
+Mercury uses OAuth. Your client opens the Mercury sign-in in the browser and stores the session itself; there is no API key to enter.
 
 ### Symptoms
 
-- Tools are visible but calls fail.
-- Health checks return authorization errors.
-- Desktop extension asks for a key again.
+- Tools are visible but calls fail with an authorization error.
+- The client asks you to authenticate again.
+- The browser sign-in completes but the client does not connect.
 
 ### Fixes
 
-- Reinstall the Claude Desktop extension and enter the key again.
-- For Claude Code, rerun the installer and choose reinstall if prompted.
-- For Pi/manual configs, confirm the header is present without printing or committing the secret.
+- Claude Code: run `/mcp`, select `mercury`, and choose **Authenticate** (or **Re-authenticate**).
+- Claude Code: if sign-in never returns to the terminal, check that nothing else is listening on local port 8766, then retry.
+- Claude Code: if you added the server by hand and sign-in keeps failing, remove it and rerun `npx @mercuryintelligence/mercury`.
+- Claude Desktop: open **Settings → Connectors**, disconnect Mercury, and connect again.
+- Confirm your Mercury account has access to Mercury data.
 
-> **Warning:** Never commit a real Mercury API key to `.mcp.json`, `.pi/mcp.json`, docs, screenshots, or logs.
+> **Warning:** Never paste sign-in tokens into chat, docs, screenshots, or logs.
 
-## Claude Desktop extension troubleshooting
+## Claude Desktop connector troubleshooting
 
-The Desktop extension bundles all four Mercury servers behind one local extension package.
+Claude Desktop connects to Mercury as a custom connector at `https://mcp.mercuryintelligence.net/mcp`.
 
-### Install does not open
+### Connector does not connect
 
-- Confirm Claude Desktop is installed and up to date.
-- Double-click `mercury-platform.mcpb` again.
-- If the OS blocks the file, allow it from system security settings.
+- Confirm Claude Desktop is up to date.
+- Check the address is exactly `https://mcp.mercuryintelligence.net/mcp`.
+- Remove the connector and add it again, then complete the browser sign-in.
 
 ### Tools do not appear
 
 - Restart Claude Desktop.
-- Confirm the extension is enabled.
-- Re-enter the API key if prompted.
+- Confirm the connector is enabled for the chat (the tools menu in the message box).
 
 ### Best practice
 

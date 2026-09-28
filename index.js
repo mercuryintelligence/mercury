@@ -3,11 +3,18 @@
 
 const readline = require('readline');
 const { spawnSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
 
-const SERVERS = require('./servers.json');
+const [SERVER] = require('./servers.json');
+
+// Written by installer 1.x (four servers, X-API-Key). Offered for removal so stale entries don't linger.
+const LEGACY_SERVERS = [
+  'mercury-market-data',
+  'mercury-darth-feedor',
+  'mercury-econ-data',
+  'mercury-pubfinance',
+];
+
+const DRY_RUN = process.argv.includes('--dry-run');
 
 // ── Terminal helpers ──────────────────────────────────────────────────────────
 
@@ -18,233 +25,98 @@ const yellow = (s) => `\x1b[33m${s}\x1b[0m`;
 const red    = (s) => `\x1b[31m${s}\x1b[0m`;
 const cyan   = (s) => `\x1b[36m${s}\x1b[0m`;
 
-const IS_WINDOWS = process.platform === 'win32';
-const MCPB_SRC   = path.join(__dirname, 'ext', 'mercury-platform', 'mercury-platform.mcpb');
-
-// ── Prompt helpers ────────────────────────────────────────────────────────────
-
-function prompt(question) {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  return new Promise((resolve) => {
-    rl.question(question, (answer) => {
-      rl.close();
-      resolve(answer.trim());
-    });
-  });
-}
-
-function promptSecret(question) {
-  return new Promise((resolve) => {
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-
-    let muting = false;
-    const origWrite = rl.output.write.bind(rl.output);
-    rl.output.write = (string, encoding, callback) => {
-      if (muting) {
-        if (typeof encoding === 'function') encoding();
-        else if (typeof callback === 'function') callback();
-        return true;
-      }
-      return origWrite(string, encoding, callback);
-    };
-
-    process.stdout.write(question);
-    muting = true;
-
-    rl.once('line', (answer) => {
-      muting = false;
-      rl.output.write = origWrite;
-      rl.close();
-      process.stdout.write('\n');
-      resolve(answer.trim());
-    });
-  });
-}
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const prompt = (question) => new Promise((resolve) => rl.question(question, (a) => resolve(a.trim())));
 
 // ── Claude Code CLI helpers ───────────────────────────────────────────────────
 
+function claude(args) {
+  if (DRY_RUN) {
+    console.log(dim('    [dry-run] ') + ['claude', ...args.map(quote)].join(' '));
+    return { ok: true };
+  }
+  const result = spawnSync('claude', args, { encoding: 'utf8', stdio: 'pipe' });
+  return result.status === 0
+    ? { ok: true }
+    : { ok: false, error: (result.error?.message || result.stderr || result.stdout || '').trim() };
+}
+
+function quote(arg) {
+  return /^[\w@%+=:,./-]+$/.test(arg) ? arg : `'${arg.replace(/'/g, `'\\''`)}'`;
+}
+
 function serverExists(name) {
-  const result = spawnSync('claude', ['mcp', 'get', name], {
-    encoding: 'utf8',
-    stdio: 'pipe',
-  });
-  return result.status === 0;
+  if (DRY_RUN) return false;
+  return spawnSync('claude', ['mcp', 'get', name], { stdio: 'pipe' }).status === 0;
 }
 
 function removeServer(name) {
   for (const scope of ['project', 'user', 'local']) {
-    spawnSync('claude', ['mcp', 'remove', '-s', scope, name], {
-      encoding: 'utf8',
-      stdio: 'pipe',
-    });
+    claude(['mcp', 'remove', '-s', scope, name]);
   }
 }
 
-function installServer(server, scope, apiKey) {
-  const result = spawnSync(
-    'claude',
-    [
-      'mcp', 'add',
-      '-s', scope,
-      '--transport', server.transport,
-      server.name,
-      server.url,
-      '--header', `X-API-Key: ${apiKey}`,
-    ],
-    { encoding: 'utf8', stdio: 'pipe' }
-  );
-  return result.status === 0
-    ? { ok: true }
-    : { ok: false, error: (result.stderr || result.stdout || '').trim() };
+// OAuth only: the client signs in and keeps its own tokens. Nothing secret is written here.
+function serverConfig() {
+  return JSON.stringify({ type: SERVER.transport, url: SERVER.url, oauth: SERVER.oauth });
 }
 
-// ── Desktop Extension installer (Windows / Claude Desktop) ────────────────────
+// ── Claude Desktop ────────────────────────────────────────────────────────────
 
-async function installDesktopExtension() {
+function showDesktopSteps() {
+  console.log(bold('  Claude Desktop connects to Mercury as a custom connector:'));
   console.log();
-  console.log(bold('  Mercury Platform — Claude Desktop Extension'));
-  console.log(dim('  ─────────────────────────────────────────────'));
-  console.log();
-  console.log(dim('  All four Mercury MCP servers are bundled into a single'));
-  console.log(dim('  .mcpb extension. Claude Desktop will prompt for your API'));
-  console.log(dim('  key and store it securely in the Windows keychain.'));
-  console.log();
-
-  if (!fs.existsSync(MCPB_SRC)) {
-    console.log(red('  Error: mercury-platform.mcpb not found at expected path.'));
-    console.log(dim('  ' + MCPB_SRC));
-    process.exit(1);
-  }
-
-  const dest = path.join(os.homedir(), 'Desktop', 'mercury-platform.mcpb');
-
-  try {
-    fs.copyFileSync(MCPB_SRC, dest);
-    console.log(green('  ✓ Copied mercury-platform.mcpb to your Desktop'));
-  } catch (err) {
-    console.log(yellow('  Could not copy to Desktop: ' + err.message));
-    console.log(dim('  File is at: ' + MCPB_SRC));
-    console.log(dim('  Copy it manually and double-click to install.'));
-    console.log();
-    process.exit(0);
-  }
-
-  // Attempt to open — triggers Claude Desktop install dialog
-  spawnSync('cmd', ['/c', 'start', '', dest], { stdio: 'pipe' });
-
-  console.log();
-  console.log(bold('  Next steps:'));
-  console.log();
-  console.log(`    ${cyan('1')}  Claude Desktop should open the install dialog automatically.`);
-  console.log(`       If it doesn't, double-click ${bold('mercury-platform.mcpb')} on your Desktop.`);
-  console.log();
-  console.log(`    ${cyan('2')}  Enter your ${bold('Mercury API Key')} when prompted.`);
-  console.log();
-  console.log(`    ${cyan('3')}  Click ${bold('Install')} — all four Mercury servers will be available.`);
+  console.log(`    ${cyan('1')}  Open ${bold('Settings → Connectors')} and choose ${bold('Add custom connector')}.`);
+  console.log(`    ${cyan('2')}  Name it ${bold('Mercury')} and paste ${bold(SERVER.url)}`);
+  console.log(`    ${cyan('3')}  Click ${bold('Connect')} and sign in with your Mercury account.`);
   console.log();
 }
 
-// ── Claude Code installer ─────────────────────────────────────────────────────
+// ── Claude Code ───────────────────────────────────────────────────────────────
 
 async function installClaudeCode() {
-  // ── Step 1: Select servers ───────────────────────────────────────────────────
-  console.log(bold('  Available servers:'));
-  console.log();
-  SERVERS.forEach((s, i) => {
-    console.log(`    ${cyan(String(i + 1))}) ${bold(s.label)}`);
-    console.log(`       ${dim(s.description)}`);
-    console.log(`       ${dim(s.url)}`);
-    console.log();
-  });
-
-  const selInput = await prompt(
-    `  Install which? ${dim('(e.g. "1 3", "all")')} [all]: `
-  );
-
-  let selected;
-  if (!selInput || selInput.toLowerCase() === 'all') {
-    selected = SERVERS;
-  } else {
-    const indices = selInput.split(/[\s,]+/).map((n) => parseInt(n, 10) - 1);
-    selected = indices
-      .filter((i) => i >= 0 && i < SERVERS.length)
-      .map((i) => SERVERS[i]);
-
-    if (selected.length === 0) {
-      console.log(red('\n  No valid selection. Exiting.'));
-      process.exit(1);
-    }
-  }
-
-  // ── Step 2: Scope ────────────────────────────────────────────────────────────
-  console.log();
   console.log(bold('  Install scope:'));
   console.log();
-  console.log(`    ${cyan('1')}  user    ${dim('— all Claude sessions  (~/.claude.json)')}`);
-  console.log(`    ${cyan('2')}  project ${dim('— this repo only       (.mcp.json)')}`);
+  console.log(`    ${cyan('1')}  user    ${dim('— all Claude Code sessions')}`);
+  console.log(`    ${cyan('2')}  project ${dim('— this repo only (.mcp.json)')}`);
   console.log();
 
-  const scopeInput = await prompt(`  Choose [1]: `);
-  const scope = scopeInput === '2' ? 'project' : 'user';
+  const scope = (await prompt('  Choose [1]: ')) === '2' ? 'project' : 'user';
   console.log(`  ${dim('Scope:')} ${scope}`);
+  console.log();
 
-  // ── Step 3: Check for existing installations ─────────────────────────────────
-  const alreadyInstalled = selected.filter((s) => serverExists(s.name));
-
-  if (alreadyInstalled.length > 0) {
-    console.log();
-    console.log(yellow('  Already installed:'));
-    alreadyInstalled.forEach((s) => console.log(`    ${yellow('!')} ${s.name}`));
-    console.log();
-
-    const overwrite = await prompt('  Remove and reinstall? [y/N]: ');
-    if (overwrite.toLowerCase() === 'y') {
-      alreadyInstalled.forEach((s) => removeServer(s.name));
-    } else {
-      selected = selected.filter((s) => !alreadyInstalled.includes(s));
-      if (selected.length === 0) {
-        console.log(dim('\n  Nothing to install. Exiting.'));
-        process.exit(0);
-      }
+  const legacy = LEGACY_SERVERS.filter(serverExists);
+  if (legacy.length > 0) {
+    console.log(yellow('  Found servers from the old four-server setup:'));
+    legacy.forEach((name) => console.log(`    ${yellow('!')} ${name}`));
+    console.log(dim(`  ${SERVER.name} replaces all of them.`));
+    if ((await prompt('  Remove them? [Y/n]: ')).toLowerCase() !== 'n') {
+      legacy.forEach(removeServer);
     }
+    console.log();
   }
 
-  // ── Step 4: API key ──────────────────────────────────────────────────────────
-  console.log();
-  const apiKey = await promptSecret('  Mercury API Key: ');
+  if (serverExists(SERVER.name)) {
+    if ((await prompt(`  ${SERVER.name} is already installed. Reinstall? [y/N]: `)).toLowerCase() !== 'y') {
+      console.log(dim('\n  Nothing to install. Exiting.\n'));
+      return;
+    }
+    removeServer(SERVER.name);
+    console.log();
+  }
 
-  if (!apiKey) {
-    console.log(red('\n  API key cannot be empty.'));
+  const { ok, error } = claude(['mcp', 'add-json', '-s', scope, SERVER.name, serverConfig()]);
+  if (!ok) {
+    console.log(`    ${red('✗')} ${SERVER.name}  ${dim(error || 'unknown error')}`);
+    console.log();
     process.exit(1);
   }
 
-  // ── Step 5: Install ──────────────────────────────────────────────────────────
+  console.log(`    ${green('✓')} ${SERVER.name}  ${dim(SERVER.url)}`);
   console.log();
-  console.log(bold('  Installing...'));
-  console.log();
-
-  const results = [];
-  for (const server of selected) {
-    const { ok, error } = installServer(server, scope, apiKey);
-    results.push({ server, ok, error });
-    if (ok) {
-      console.log(`    ${green('✓')} ${server.name}`);
-    } else {
-      console.log(`    ${red('✗')} ${server.name}  ${dim(error || 'unknown error')}`);
-    }
-  }
-
-  // ── Step 6: Summary ──────────────────────────────────────────────────────────
-  const failed = results.filter((r) => !r.ok);
-  console.log();
-
-  if (failed.length === 0) {
-    console.log(green('  All done.'));
-    console.log();
-    console.log(dim('  Verify with: claude mcp list'));
-  } else {
-    console.log(yellow(`  Done with ${failed.length} error(s). Check output above.`));
-  }
+  console.log(bold('  Next:'));
+  console.log(`    Start ${bold('claude')}, run ${bold('/mcp')}, select ${bold(SERVER.name)} and choose ${bold('Authenticate')}.`);
+  console.log('    Your browser opens the Mercury sign-in; Claude Code stores the session itself.');
   console.log();
 }
 
@@ -254,28 +126,27 @@ async function main() {
   console.log();
   console.log(bold('  Mercury MCP Installer'));
   console.log(dim('  ─────────────────────────────────────────────'));
+  console.log(dim(`  One server, ${SERVER.url}, signed in with OAuth.`));
+  console.log();
+  console.log(bold('  Set up:'));
+  console.log();
+  console.log(`    ${cyan('1')}  Claude Code     ${dim('— adds the server via the claude CLI')}`);
+  console.log(`    ${cyan('2')}  Claude Desktop  ${dim('— shows the custom connector steps')}`);
   console.log();
 
-  if (IS_WINDOWS) {
-    console.log(bold('  Install for:'));
-    console.log();
-    console.log(`    ${cyan('1')}  Claude Desktop  ${dim('— .mcpb extension, one-click install (recommended)')}`);
-    console.log(`    ${cyan('2')}  Claude Code     ${dim('— claude mcp add via CLI')}`);
-    console.log();
+  const target = await prompt('  Choose [1]: ');
+  console.log();
 
-    const targetInput = await prompt(`  Choose [1]: `);
-    console.log();
-
-    if (targetInput !== '2') {
-      await installDesktopExtension();
-      return;
-    }
+  if (target === '2') {
+    showDesktopSteps();
+    return;
   }
-
   await installClaudeCode();
 }
 
-main().catch((err) => {
-  console.error(red(`\n  Error: ${err.message}`));
-  process.exit(1);
-});
+main()
+  .catch((err) => {
+    console.error(red(`\n  Error: ${err.message}`));
+    process.exitCode = 1;
+  })
+  .finally(() => rl.close());

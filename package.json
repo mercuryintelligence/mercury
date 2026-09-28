@@ -1,9 +1,9 @@
 {
-  "name": "mercury-install-mcp",
+  "name": "@mercuryintelligence/mercury",
   "version": "1.0.0",
-  "description": "Installer for Mercury Platform MCP servers — Desktop Extension for Claude Desktop, CLI for Claude Code",
+  "description": "Connects MCP clients to Mercury Intelligence: one OAuth server, no API key",
   "bin": {
-    "mercury-install-mcp": "index.js"
+    "mercury-connect": "index.js"
   },
   "files": [
     "index.js",
@@ -19,8 +19,14 @@
     "mercury",
     "installer"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mercuryintelligence/mercury.git"
+  },
+  "homepage": "https://github.com/mercuryintelligence/mercury#readme",
   "license": "MIT",
-  "dependencies": {
-    "index.js": "^0.0.3"
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

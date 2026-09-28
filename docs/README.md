@@ -19,7 +19,7 @@ These docs are intentionally compact: fewer pages, more substance per page. Star
 | [[workflows|Workflows]] | Morning brief, market scan, instrument deep dive, rates/STIR, liquidity, newsletter research. |
 | [[tool-reference|Tool reference]] | All MCP tools grouped by service, with source-backed descriptions, parameters, defaults, and guardrails. |
 | [[concepts|Concepts]] | AMT, volatility regime, LCI/liquidity pillars, curve/STIR, newsletter retrieval model. |
-| [[troubleshooting|Troubleshooting]] | MCP connection, API key, Desktop extension, stale/missing data. |
+| [[troubleshooting|Troubleshooting]] | MCP connection, sign-in, Desktop connector, stale/missing data. |
 
 ## Recommended first command
 

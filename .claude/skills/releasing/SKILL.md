@@ -1,19 +1,19 @@
 ---
 name: releasing
 description: >
-  Cut a user-facing release of the Mercury Platform in this repo (terminalbeta)
+  Cut a user-facing release of the Mercury Platform in this repo (mercuryintelligence/mercury)
   and announce it on Discord. TRIGGER when the user says to release, cut a
   release, publish a version, announce an update, or points at an upstream
   Mercury change set (for example a darth-feedor release) and asks to turn it
-  into a terminalbeta release. The skill fixes the shape of the release body,
+  into a Mercury Platform release. The skill fixes the shape of the release body,
   the no-closed-source disclosure rules, and the independent versioning rule.
   It does NOT decide what to release — the user points at the source material.
 ---
 
-# Releasing the Mercury Platform (terminalbeta)
+# Releasing the Mercury Platform (mercuryintelligence/mercury)
 
 This repo publishes the user-facing Mercury Platform: the installer
-(`mercury-install-mcp`), the Claude Desktop extension, and the public docs in
+(`@mercuryintelligence/mercury` on npm), the Claude Desktop extension, and the public docs in
 `docs/`. Releases cut here are what users and beta testers see.
 
 ## What the agent is and is not responsible for
@@ -22,7 +22,7 @@ This repo publishes the user-facing Mercury Platform: the installer
   set from an upstream Mercury repository (for example darth-feedor), or a
   list of changes they want surfaced. Read it, understand what changed from a
   *user's* perspective, and nothing more.
-- **The agent writes the user-facing release** for terminalbeta: version,
+- **The agent writes the user-facing release** for this repo: version,
   title, body, and the GitHub Release.
 - **The agent never invents scope.** If the source material is thin or the
   user intent is ambiguous, ask. Do not pad a release with changes you cannot
@@ -47,12 +47,16 @@ This repo publishes the user-facing Mercury Platform: the installer
    fires `.github/workflows/discord-release-announce.yml`, which posts the
    body to the Discord webhook (`DISCORD_RELEASE_WEBHOOK_URL` secret). Check
    the workflow run succeeded, or re-run it if the webhook was down.
+   The same event fires `.github/workflows/publish.yml`, which publishes
+   `@mercuryintelligence/mercury` to npm with provenance (`NPM_TOKEN`
+   secret; the tag must equal `v` + the `package.json` version). Check the
+   run and `npm view @mercuryintelligence/mercury version`.
 
 ## Independent versioning — never mirror
 
-Each Mercury repository versions independently. terminalbeta does NOT mirror
-the version of darth-feedor or any other upstream repo. A terminalbeta release
-that surfaces upstream work carries **terminalbeta's own next version**.
+Each Mercury repository versions independently. This repo does NOT mirror
+the version of darth-feedor or any other upstream repo. A release here
+that surfaces upstream work carries **this repo's own next version**.
 
 - Current published version: read `package.json`.
 - Patch bump (default): bug fixes, doc updates, installer/ext fixes.
@@ -86,9 +90,9 @@ installer; the extension update flow if one exists).
 
 ## Links
 
-- Docs: [Quickstart](https://github.com/Jaggerxtrm/terminalbeta/blob/main/docs/quickstart.md) — and link the docs page that documents a changed
+- Docs: [Quickstart](https://github.com/mercuryintelligence/mercury/blob/main/docs/quickstart.md) — and link the docs page that documents a changed
   capability, where one exists.
-- [Tool reference](https://github.com/Jaggerxtrm/terminalbeta/blob/main/docs/tool-reference.md) if tool behavior changed.
+- [Tool reference](https://github.com/mercuryintelligence/mercury/blob/main/docs/tool-reference.md) if tool behavior changed.
 - Website: https://mercuryintelligence.net
 ```
 
