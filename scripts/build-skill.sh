@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Deterministic build of terminalbeta/skills/using-mercury.skill from skills/using-mercury/.
+# Deterministic build of skills/using-mercury.skill from plugins/mercury/skills/using-mercury/.
 # Uses python3 stdlib (zipfile) for portability: fixed epoch mtime, sorted filelist,
 # no extra attributes, so successive builds are bit-identical.
 cd "$(dirname "$0")/.."
-SRC=skills/using-mercury
+SRC=plugins/mercury/skills/using-mercury
 OUT=skills/using-mercury.skill
 [ -d "$SRC" ] || { echo "missing source $SRC" >&2; exit 1; }
 

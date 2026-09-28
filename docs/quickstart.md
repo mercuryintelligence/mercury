@@ -17,12 +17,14 @@ Most market assistants fail in one of two ways: they either answer from stale pr
 
 ### The four data domains
 
-| Domain | MCP server | What it covers |
-|---|---|---|
-| Market Data | `mercury-market-data` | Cross-asset futures snapshots, bundles, AMT, volatility, market texture, curve/STIR spreads, candles, futures options, correlations, and sandboxed cross-domain Python analysis. |
-| Econ Data | `mercury-econ-data` | Calendar events with actual/forecast/previous values, BLS/BEA history, economic-history catalog, and data-quality diagnostics. |
-| Darth Feedor | `mercury-darth-feedor` | Live squawks, rolling topic context, newsletter/media articles, article bullets, full article detail, article graph, progressive search, archive search, aggregation, and research docs. |
-| PubFinance | `mercury-pubfinance` | Liquidity Composite Index, fiscal daily/weekly flows, Fed balance sheet/liquidity, reference rates, repo/RRP, Treasury operations, dealers, fails, TIC, debt, and freshness. |
+All four are served by one MCP server, `mercury`, at `https://mcp.mercuryintelligence.net/mcp`.
+
+| Domain | What it covers |
+|---|---|
+| Market Data | Cross-asset futures snapshots, bundles, AMT, volatility, market texture, curve/STIR spreads, candles, futures options, correlations, and sandboxed cross-domain Python analysis. |
+| Econ Data | Calendar events with actual/forecast/previous values, BLS/BEA history, economic-history catalog, and data-quality diagnostics. |
+| Darth Feedor | Live squawks, rolling topic context, newsletter/media articles, article bullets, full article detail, article graph, progressive search, archive search, aggregation, and research docs. |
+| PubFinance | Liquidity Composite Index, fiscal daily/weekly flows, Fed balance sheet/liquidity, reference rates, repo/RRP, Treasury operations, dealers, fails, TIC, debt, and freshness. |
 
 ### How Mercury analysis should feel
 
@@ -56,7 +58,7 @@ Then ask your market question, or include the intent in the same command:
 - It is not a substitute for your own trading judgment.
 - It is not guaranteed to have every data source updated at the same cadence.
 - It should not treat newsletter archive results as current news without checking dates.
-- It should not expose or print API keys.
+- It should not expose or print credentials or sign-in tokens.
 
 ### Next
 
@@ -64,35 +66,24 @@ Continue below with the Claude Desktop or Claude Code install flow, then run the
 
 ## Install on Claude Desktop
 
-Use the Claude Desktop extension when you want the simplest install path. The extension packages Mercury MCP access for a non-technical user: install, enter the API key, restart Claude Desktop, and invoke `/using-mercury`.
+Claude Desktop connects to Mercury as a custom connector. You add the address once, sign in with
+your Mercury account, and Claude keeps the session. There is no API key.
 
 ### Before you begin
 
 - Install the latest Claude Desktop.
-- Have your Mercury API key ready.
-- Do not paste the API key into chat or documentation.
+- Have your Mercury account sign-in ready.
 
 ### Steps
 
-1. Download `mercury-platform.mcpb` from the Mercury installer package.
-2. In Claude Desktop, go to **Settings → Extensions** and drag the file into the extensions panel.
-3. Claude Desktop opens the extension install dialog.
-4. Enter your Mercury API key when prompted.
-5. Confirm the install.
-6. Restart Claude Desktop.
-
-### Result
-
-Claude Desktop gets one Mercury Platform extension that aggregates the four Mercury MCP domains:
-
-- Market Data
-- Econ Data
-- Darth Feedor
-- PubFinance
+1. Open **Settings → Connectors** and choose **Add custom connector**.
+2. Name it **Mercury** and paste `https://mcp.mercuryintelligence.net/mcp`.
+3. Click **Connect**. Your browser opens the Mercury sign-in; approve access.
+4. Back in Claude Desktop, the Mercury connector shows as connected.
 
 ### Skills
 
-For Desktop, ship `using-mercury` as the single canonical skill. Users invoke it as:
+Upload `using-mercury.skill` under **Settings → Capabilities → Skills**, then invoke it as:
 
 ```text
 /using-mercury
@@ -113,32 +104,21 @@ A healthy setup should describe market data, econ data, news/research, and PubFi
 ### Related
 
 - [[quickstart#Run your first session|Run your first session]]
-- [[troubleshooting|Claude Desktop extension]]
-- [[troubleshooting|API key issues]]
+- [[troubleshooting|Sign-in issues]]
 
 ## Install on Claude Code
 
-Use the CLI installer if you run Claude Code in a terminal. Claude Code users can install the same Mercury MCP servers and optionally keep specialized workflow skills as shortcuts.
-
-### Before you begin
-
-- Node.js 18 or newer.
-- Claude Code CLI installed.
-- Mercury API key.
+Install the Mercury plugin. It adds the Mercury server and the Using Mercury skill in one step;
+Claude Code then signs you in and keeps the session.
 
 ### Install
 
-```bash
-npx github:Jaggerxtrm/terminalbeta
+```text
+/plugin marketplace add mercuryintelligence/mercury
+/plugin install mercury@mercury
 ```
 
-The installer will:
-
-1. Show the available Mercury servers.
-2. Ask which servers to install.
-3. Ask for user or project scope.
-4. Prompt for your Mercury API key.
-5. Run `claude mcp add` with the correct HTTP endpoints and `X-API-Key` header.
+Then run `/mcp`, select the Mercury server, and choose **Authenticate** to sign in.
 
 ### Verify
 
@@ -146,19 +126,15 @@ The installer will:
 claude mcp list
 ```
 
-You should see:
-
-- `mercury-market-data`
-- `mercury-darth-feedor`
-- `mercury-econ-data`
-- `mercury-pubfinance`
+You should see the Mercury server at `https://mcp.mercuryintelligence.net/mcp` as connected. If it
+shows as needing authentication, repeat the `/mcp` sign-in.
 
 ### Skills
 
-Start with the canonical skill:
+The plugin installs the canonical skill as:
 
 ```text
-/using-mercury
+/mercury:using-mercury
 ```
 
 Specialized `mercury-*` skills are workflow shortcuts for Claude Code. They should not replace the public Desktop guidance; `/using-mercury` remains the universal entry point.
@@ -167,8 +143,18 @@ Specialized `mercury-*` skills are workflow shortcuts for Claude Code. They shou
 
 - [[quickstart#Run your first session|Run your first session]]
 - [[troubleshooting|MCP connection issues]]
-- [[troubleshooting|API key issues]]
+- [[troubleshooting|Sign-in issues]]
 
+
+## Install on Codex
+
+```bash
+codex plugin marketplace add mercuryintelligence/mercury
+codex plugin add mercury@mercury
+codex mcp login mercury
+```
+
+Start a new Codex session so the Mercury server and the Using Mercury skill load.
 
 ## Skills and workflow shortcuts
 
@@ -202,7 +188,7 @@ Start a Mercury session by invoking the skill as a slash command. The slash comm
 ### Before you begin
 
 - Mercury MCP servers are installed and visible in your Claude client.
-- Your Mercury API key is configured.
+- You have signed in to Mercury from your client.
 - The `using-mercury` skill is installed.
 
 ### Start prompt

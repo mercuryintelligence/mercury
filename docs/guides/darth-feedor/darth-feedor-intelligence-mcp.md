@@ -7,8 +7,8 @@ Darth Feedor is Mercury’s read-only market-intelligence MCP server. It gives a
 Use it progressively: start with the smallest useful view, check freshness, inspect source-facing evidence, and deepen only when the question requires it.
 
 - **Version:** `0.3.2`
-- **MCP endpoint:** `/feeder/mcp`
-- **Authentication:** supply your Mercury `X-API-Key`
+- **MCP endpoint:** `https://mcp.mercuryintelligence.net/mcp` (the single Mercury server)
+- **Authentication:** OAuth sign-in with your Mercury account
 - **Transport:** Streamable HTTP
 - **Machine schema authority:** MCP `tools/list`
 - **Runtime usage guide:** `get_capability_guide()`
@@ -42,11 +42,11 @@ The v0.3.2 public surface contains **14 MCP tools**. You should not need to memo
 ### Connect
 
 ```text
-endpoint: /feeder/mcp
-authentication: X-API-Key: <your Mercury API key>
+endpoint: https://mcp.mercuryintelligence.net/mcp
+authentication: OAuth (your client runs the Mercury sign-in)
 ```
 
-Do not log or commit API keys.
+Do not log or commit sign-in tokens.
 
 ### Verify the connection
 
@@ -1071,8 +1071,8 @@ TOON escapes physical row/column separators and controls. It is optimized for co
 | Property | Public contract |
 |---|---|
 | Transport | Streamable HTTP |
-| Endpoint | `/feeder/mcp` |
-| Authentication | Mercury `X-API-Key` |
+| Endpoint | `https://mcp.mercuryintelligence.net/mcp` |
+| Authentication | OAuth sign-in with your Mercury account |
 | Rate limit | 10 requests/second per client, burst 50 |
 | Runtime version | `serverInfo.version` and `tool_health_check().version` |
 | Default inspection format | TOON where supported |

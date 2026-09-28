@@ -22,7 +22,7 @@ Ask for anything missing, but don't be pedantic — file quickly with what you h
 
 Direct the user to open an issue at:
 
-**https://github.com/Jaggerxtrm/terminalbeta/issues/new**
+**https://github.com/mercuryintelligence/mercury/issues/new**
 
 Use this template:
 
@@ -34,14 +34,14 @@ Use this template:
 [What should have happened]
 
 **Steps to reproduce**
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 **Environment**
 - OS: [e.g. Windows 11, macOS 14]
 - Client: [Claude Desktop / Claude Code]
-- Node version (if relevant): 
+- Node version (if relevant):
 
 **Additional context**
 [Anything else that might help]
@@ -67,9 +67,9 @@ If the user doesn't have a GitHub account, produce a clean bug report they can c
 3. [observe]
 
 **Environment:**
-- OS: 
+- OS:
 - Client: Claude Desktop / Claude Code
-- Node version (if relevant): 
+- Node version (if relevant):
 
 **Additional context:**
 [any other details]
