@@ -30,16 +30,10 @@ const prompt = (question) => new Promise((resolve) => rl.question(question, (a) 
 
 // ── Claude Code CLI helpers ───────────────────────────────────────────────────
 
-const IS_WINDOWS = process.platform === 'win32';
-
-// npm installs Claude Code on Windows as claude.cmd, which Node only runs through a shell.
-// ponytail: cmd-style quoting covers our args (no & | < > ^ % !, no trailing backslash); revisit if an arg ever does.
+// No shell (semgrep spawn-shell-true). On Windows this finds the native claude.exe; the npm
+// claude.cmd shim can't be spawned without a shell, so ENOENT points at the native installer.
 function spawnClaude(args) {
-  return IS_WINDOWS
-    ? spawnSync('claude', args.map((a) => (/[\s"]/.test(a) ? `"${a.replace(/"/g, '\\"')}"` : a)), {
-        encoding: 'utf8', stdio: 'pipe', shell: true,
-      })
-    : spawnSync('claude', args, { encoding: 'utf8', stdio: 'pipe' });
+  return spawnSync('claude', args, { encoding: 'utf8', stdio: 'pipe' });
 }
 
 function claude(args) {
@@ -49,7 +43,7 @@ function claude(args) {
   }
   const result = spawnClaude(args);
   if (result.error?.code === 'ENOENT') {
-    return { ok: false, error: 'Claude Code CLI not found on PATH. Install it from https://code.claude.com' };
+    return { ok: false, error: 'Claude Code CLI (claude executable) not found on PATH. Install it from https://code.claude.com' };
   }
   return result.status === 0
     ? { ok: true }
