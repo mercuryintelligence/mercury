@@ -82,11 +82,12 @@ release.
 
 ## The release body is a rendering
 
-The body is the note prose, then a fixed `## How to get it` block (Claude Code:
-`claude plugin marketplace update mercury` then `claude plugin update
-mercury@mercury`; Codex: `codex plugin marketplace upgrade mercury`; Desktop:
-re-upload the skill if it changed), then `## Links` to this repo's public docs
-and https://mercuryintelligence.net. Both fixed blocks live in
+The body is the note prose, then a fixed `## How to get it` block (Claude Code
+install and update commands, Codex install and `codex mcp login mercury`,
+Claude Desktop/claude.ai connector plus skill upload, and removal of the older
+four separate servers), then `## Links` to the public docs site
+(platform-plugins, platform-clients, platform-skills) and
+https://mercuryintelligence.net. Both fixed blocks live in
 `scripts/render-release-body.sh`; change them there, with the check in
 `scripts/render-release-body.test.sh`. Note-relative `/docs/...` routes are
 rewritten to public docs URLs.
@@ -106,8 +107,8 @@ merge) and to anything you add here; keep them at least as strict:
 - **User-visible behavior only.** If a user cannot observe or benefit from a
   change, it does not belong in the body. If it is observable, describe the
   observable behavior, not the mechanism.
-- **Public links only.** Docs links point to this repo's public `docs/`, the
-  public README, or https://mercuryintelligence.net. Verify every URL you
+- **Public links only.** Links point to https://docs.mercuryintelligence.net
+  or https://mercuryintelligence.net. Verify every URL you
   emit is reachable by the public.
 - **Accurate scope.** Only what the user pointed at and what is actually in
   the release. If a doc page describes a capability that did not change, do

@@ -29,13 +29,19 @@ ${prose}
 
 ## How to get it
 
-Claude Code: \`claude plugin marketplace update mercury\` then \`claude plugin update mercury@mercury\`.
-Codex: \`codex plugin marketplace upgrade mercury\`.
-Desktop: re-upload the skill if it changed.
+**Claude Code**, first install: \`/plugin marketplace add mercuryintelligence/mercury\` then \`/plugin install mercury@mercury\`.
+Already installed, update: \`claude plugin marketplace update mercury\` then \`claude plugin update mercury@mercury\`.
+
+**Codex**: \`codex plugin marketplace add mercuryintelligence/mercury\`, \`codex plugin add mercury@mercury\`, then \`codex mcp login mercury\`.
+
+**Claude Desktop and claude.ai**: add the custom connector and upload the skill.
+
+If you set up the older four separate Mercury servers earlier, remove them; the single \`mercury\` server replaces them.
 
 ## Links
 
-- Docs: [Quickstart](https://github.com/mercuryintelligence/mercury/blob/main/docs/quickstart.md)
-- [Tool reference](https://github.com/mercuryintelligence/mercury/blob/main/docs/tool-reference.md)
+- [Plugins](https://docs.mercuryintelligence.net/docs/platform-plugins)
+- [Clients](https://docs.mercuryintelligence.net/docs/platform-clients)
+- [Skills](https://docs.mercuryintelligence.net/docs/platform-skills)
 - Website: https://mercuryintelligence.net
 BODY
