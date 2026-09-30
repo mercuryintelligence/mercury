@@ -84,7 +84,7 @@ release.
 
 The body is the note prose, then a fixed `## How to get it` block (Claude Code
 install and update commands, Codex install and `codex mcp login mercury`,
-Claude Desktop/claude.ai connector plus skill upload, and removal of the older
+Claude Desktop/claude.ai custom connector (the skill for these clients is coming), and removal of the older
 four separate servers), then `## Links` to the public docs site
 (platform-plugins, platform-clients, platform-skills) and
 https://mercuryintelligence.net. Both fixed blocks live in
