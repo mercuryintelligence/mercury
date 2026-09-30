@@ -34,7 +34,7 @@ Already installed, update: \`claude plugin marketplace update mercury\` then \`c
 
 **Codex**: \`codex plugin marketplace add mercuryintelligence/mercury\`, \`codex plugin add mercury@mercury\`, then \`codex mcp login mercury\`.
 
-**Claude Desktop and claude.ai**: add the custom connector and upload the skill.
+**Claude Desktop and claude.ai**: add a custom connector with the Mercury address; the skill for these clients is coming.
 
 If you set up the older four separate Mercury servers earlier, remove them; the single \`mercury\` server replaces them.
 
