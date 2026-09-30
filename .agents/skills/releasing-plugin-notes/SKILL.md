@@ -1,16 +1,18 @@
 ---
-name: releasing
+name: releasing-plugin-notes
 description: >
-  Cut a user-facing release of the Mercury Platform in this repo (mercuryintelligence/mercury)
-  and announce it on Discord. TRIGGER when the user says to release, cut a
+  Cut a release of the Mercury plugin in this repo (mercuryintelligence/mercury): render the
+  GitHub Release body from the merged platform corpus note
+  (release-notes/plugins/<id>.md) and announce it on Discord. Not the generic npm
+  releasing skill. TRIGGER when the user says to release, cut a
   release, publish a version, announce an update, or points at an upstream
   Mercury change set (for example a darth-feedor release) and asks to turn it
-  into a Mercury Platform release. The skill fixes the shape of the release body,
+  into a Mercury Platform release. The skill fixes how the body is rendered,
   the no-closed-source disclosure rules, and the independent versioning rule.
   It does NOT decide what to release — the user points at the source material.
 ---
 
-# Releasing the Mercury Platform (mercuryintelligence/mercury)
+# Releasing the Mercury plugin from a corpus note (mercuryintelligence/mercury)
 
 This repo publishes the user-facing Mercury Platform: the `mercury`
 plugin for Claude Code and Codex, the packaged Using Mercury skill, and the public docs in
@@ -22,8 +24,14 @@ plugin for Claude Code and Codex, the packaged Using Mercury skill, and the publ
   set from an upstream Mercury repository (for example darth-feedor), or a
   list of changes they want surfaced. Read it, understand what changed from a
   *user's* perspective, and nothing more.
-- **The agent writes the user-facing release** for this repo: version,
-  title, body, and the GitHub Release.
+- **The corpus note is the only authored text.** The user-facing note lives in
+  the platform repo as `release-notes/plugins/<id>.md` (frontmatter + prose),
+  is drafted and approved there, and must be merged before a release is cut
+  here. The GitHub Release body is a rendering of it, never a second draft.
+  If the note is missing or needs a change, fix it in platform and re-render;
+  do not edit the rendered body.
+- **The agent cuts the release** for this repo: version, changelog, tag, and
+  the GitHub Release from the rendered body.
 - **The agent never invents scope.** If the source material is thin or the
   user intent is ambiguous, ask. Do not pad a release with changes you cannot
   source to the pointed material.
@@ -44,9 +52,15 @@ plugin for Claude Code and Codex, the packaged Using Mercury skill, and the publ
 4. **Open and merge** the version/changelog change on a branch, or fold it
    into the release PR, per repo convention. The release tag must point at the
    merged commit.
-5. **Create the Git tag and GitHub Release** on `main`:
-   `gh release create vX.Y.Z --title "..." --notes-file RELEASE_BODY.md`
-6. **Confirm the announcement** reached Discord. Publishing the GitHub Release
+5. **Render the body from the merged corpus note and dry-run it**:
+   `scripts/render-release-body.sh <note.md> > RELEASE_BODY.md`
+   (`--title` prints the note title). The script drops all frontmatter,
+   including the `source` provenance block, and appends the "How to get it"
+   and public links blocks. Show the operator the rendered body and get
+   approval before publishing.
+6. **Create the Git tag and GitHub Release** on `main`:
+   `gh release create vX.Y.Z --title "$(scripts/render-release-body.sh --title <note.md>)" --notes-file RELEASE_BODY.md`
+7. **Confirm the announcement** reached Discord. Publishing the GitHub Release
    fires `.github/workflows/discord-release-announce.yml`, which posts the
    body to the Discord webhook (`DISCORD_RELEASE_WEBHOOK_URL` secret). Check
    the workflow run succeeded, or re-run it if the webhook was down.
@@ -66,38 +80,19 @@ Name the upstream source release inside the body as *context* (for example
 "pairs with the Darth Feedor v0.3.2 update"), never as the version of this
 release.
 
-## The user-facing shape of the release body
+## The release body is a rendering
 
-Write for a person who uses Mercury through Claude. Short, concrete,
-outcome-first. The shape below is the contract.
+The body is the note prose, then a fixed `## How to get it` block (Claude Code:
+`claude plugin marketplace update mercury` then `claude plugin update
+mercury@mercury`; Codex: `codex plugin marketplace upgrade mercury`; Desktop:
+re-upload the skill if it changed), then `## Links` to this repo's public docs
+and https://mercuryintelligence.net. Both fixed blocks live in
+`scripts/render-release-body.sh`; change them there, with the check in
+`scripts/render-release-body.test.sh`. Note-relative `/docs/...` routes are
+rewritten to public docs URLs.
 
-```markdown
-## What's new
-
-Lead with the one or two things that matter most to a user, in plain
-language, tied to what they can now do. If the release is small, one short
-paragraph or a tight bullet list is enough.
-
-- **New capability** — what a user can now ask Mercury to do.
-- **Improvement** — what works better than before.
-- **Fix** — what no longer misbehaves.
-
-## How to get it
-
-One line on how existing users update (Claude Code: `claude plugin marketplace
-update mercury` then `claude plugin update mercury@mercury`; Codex:
-`codex plugin marketplace upgrade mercury`; Desktop: re-upload the skill if it
-changed).
-
-## Links
-
-- Docs: [Quickstart](https://github.com/mercuryintelligence/mercury/blob/main/docs/quickstart.md) — and link the docs page that documents a changed
-  capability, where one exists.
-- [Tool reference](https://github.com/mercuryintelligence/mercury/blob/main/docs/tool-reference.md) if tool behavior changed.
-- Website: https://mercuryintelligence.net
-```
-
-Rules that always apply:
+Disclosure rules apply to the note (the platform validator enforces them at
+merge) and to anything you add here; keep them at least as strict:
 
 - **No code.** No file paths, function names, internal module or service
   names, repo-internal identifiers, class names, or architecture.
@@ -125,7 +120,7 @@ not.
 ## Discord announcement
 
 The webhook workflow posts the release title and body automatically. The
-announcement therefore inherits the body you wrote: keep the body
+announcement therefore inherits the rendered body: keep the note
 self-contained and useful on Discord (markdown renders in the embed). If the
 body is long, the workflow truncates it at the Discord embed limit; put the
 most important content in the first few lines.

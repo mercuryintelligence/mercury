@@ -110,6 +110,8 @@ jobs:
           cp skills/using-mercury.skill /tmp/committed.skill
           bash scripts/build-skill.sh
           cmp skills/using-mercury.skill /tmp/committed.skill
+      - name: Release body renders from corpus note
+        run: bash scripts/render-release-body.test.sh
 
   gate:
     name: ci/gate
