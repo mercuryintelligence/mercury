@@ -3,7 +3,7 @@ name: releasing-plugin-notes
 description: >
   Cut a release of the Mercury plugin in this repo (mercuryintelligence/mercury): render the
   GitHub Release body from the merged platform corpus note
-  (release-notes/plugins/<id>.md) and announce it on Discord. Not the generic npm
+  (release-notes/plugins/<id>.md). The platform bot announces the note on Discord. Not the generic npm
   releasing skill. TRIGGER when the user says to release, cut a
   release, publish a version, announce an update, or points at an upstream
   Mercury change set (for example a darth-feedor release) and asks to turn it
@@ -60,10 +60,12 @@ plugin for Claude Code and Codex, the packaged Using Mercury skill, and the publ
    approval before publishing.
 6. **Create the Git tag and GitHub Release** on `main`:
    `gh release create vX.Y.Z --title "$(scripts/render-release-body.sh --title <note.md>)" --notes-file RELEASE_BODY.md`
-7. **Confirm the announcement** reached Discord. Publishing the GitHub Release
-   fires `.github/workflows/discord-release-announce.yml`, which posts the
-   body to the Discord webhook (`DISCORD_RELEASE_WEBHOOK_URL` secret). Check
-   the workflow run succeeded, or re-run it if the webhook was down.
+7. **Do not announce from this repo.** Publishing the GitHub Release posts
+   nothing to Discord. The platform bot posts the plugins reader note to
+   Discord after the docs deploy that publishes it (platform release lifecycle
+   canon, step 9, `docs/operations/release-lifecycle.md` in platform). Ask the
+   platform release coordinator to confirm that run; there is nothing to
+   re-run here.
 
 ## Independent versioning — never mirror
 
@@ -120,8 +122,8 @@ not.
 
 ## Discord announcement
 
-The webhook workflow posts the release title and body automatically. The
-announcement therefore inherits the rendered body: keep the note
-self-contained and useful on Discord (markdown renders in the embed). If the
-body is long, the workflow truncates it at the Discord embed limit; put the
-most important content in the first few lines.
+This repo posts nothing to Discord. The platform bot announces the reader note
+after the docs deploy, so write the note (in platform) to be self-contained
+and useful there. Announcing GitHub Release bodies stays draft-first per the
+platform canon: create the release as a draft and publish only on the
+operator's explicit go.
