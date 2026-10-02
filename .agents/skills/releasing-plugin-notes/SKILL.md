@@ -3,7 +3,7 @@ name: releasing-plugin-notes
 description: >
   Cut a release of the Mercury plugin in this repo (mercuryintelligence/mercury): render the
   GitHub Release body from the merged platform corpus note
-  (release-notes/plugins/<id>.md) and announce it on Discord. Not the generic npm
+  (release-notes/plugins/<id>.md). The platform bot announces the note on Discord. Not the generic npm
   releasing skill. TRIGGER when the user says to release, cut a
   release, publish a version, announce an update, or points at an upstream
   Mercury change set (for example a darth-feedor release) and asks to turn it
@@ -60,10 +60,14 @@ plugin for Claude Code and Codex, the packaged Using Mercury skill, and the publ
    approval before publishing.
 6. **Create the Git tag and GitHub Release** on `main`:
    `gh release create vX.Y.Z --title "$(scripts/render-release-body.sh --title <note.md>)" --notes-file RELEASE_BODY.md`
-7. **Confirm the announcement** reached Discord. Publishing the GitHub Release
-   fires `.github/workflows/discord-release-announce.yml`, which posts the
-   body to the Discord webhook (`DISCORD_RELEASE_WEBHOOK_URL` secret). Check
-   the workflow run succeeded, or re-run it if the webhook was down.
+7. **Do not announce from this repo.** Publishing the GitHub Release posts
+   nothing to Discord, and the release needs no draft step here because no
+   workflow in this repo announces on publish. The Discord post of the plugins
+   reader note is a deliberate platform `workflow_dispatch` run by the release
+   coordinator, not automatic: after the docs deploy that publishes the note
+   (platform release lifecycle canon, step 9), a dry run first, then the live
+   run after the operator's go. Products listed in the platform
+   `exclude_products` input are skipped. Ask the coordinator for the run URL.
 
 ## Independent versioning — never mirror
 
@@ -120,8 +124,7 @@ not.
 
 ## Discord announcement
 
-The webhook workflow posts the release title and body automatically. The
-announcement therefore inherits the rendered body: keep the note
-self-contained and useful on Discord (markdown renders in the embed). If the
-body is long, the workflow truncates it at the Discord embed limit; put the
-most important content in the first few lines.
+This repo posts nothing to Discord. The platform announce run described in
+step 7 posts the reader note, so write the note (in platform) to be
+self-contained and useful there. The canon's draft-first rule applies to repos
+whose releases announce on publish; this repo's releases do not.
