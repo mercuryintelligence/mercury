@@ -61,11 +61,13 @@ plugin for Claude Code and Codex, the packaged Using Mercury skill, and the publ
 6. **Create the Git tag and GitHub Release** on `main`:
    `gh release create vX.Y.Z --title "$(scripts/render-release-body.sh --title <note.md>)" --notes-file RELEASE_BODY.md`
 7. **Do not announce from this repo.** Publishing the GitHub Release posts
-   nothing to Discord. The platform bot posts the plugins reader note to
-   Discord after the docs deploy that publishes it (platform release lifecycle
-   canon, step 9, `docs/operations/release-lifecycle.md` in platform). Ask the
-   platform release coordinator to confirm that run; there is nothing to
-   re-run here.
+   nothing to Discord, and the release needs no draft step here because no
+   workflow in this repo announces on publish. The Discord post of the plugins
+   reader note is a deliberate platform `workflow_dispatch` run by the release
+   coordinator, not automatic: after the docs deploy that publishes the note
+   (platform release lifecycle canon, step 9), a dry run first, then the live
+   run after the operator's go. Products listed in the platform
+   `exclude_products` input are skipped. Ask the coordinator for the run URL.
 
 ## Independent versioning — never mirror
 
@@ -122,8 +124,7 @@ not.
 
 ## Discord announcement
 
-This repo posts nothing to Discord. The platform bot announces the reader note
-after the docs deploy, so write the note (in platform) to be self-contained
-and useful there. Announcing GitHub Release bodies stays draft-first per the
-platform canon: create the release as a draft and publish only on the
-operator's explicit go.
+This repo posts nothing to Discord. The platform announce run described in
+step 7 posts the reader note, so write the note (in platform) to be
+self-contained and useful there. The canon's draft-first rule applies to repos
+whose releases announce on publish; this repo's releases do not.

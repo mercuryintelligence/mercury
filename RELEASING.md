@@ -7,19 +7,21 @@ the platform repo (operations release-lifecycle doc). Procedure: `.agents/skills
 
 RELEASE_MODE: operator-cut
 
-A person tags and publishes a GitHub Release by hand with `gh release create`; no workflow builds or publishes
-anything on tag. The release body is rendered from the merged platform corpus note by `scripts/render-release-body.sh`.
+A person tags and publishes a GitHub Release by hand with `gh release create` (skill step 6); no workflow in
+`.github/workflows/` builds or publishes on tag. The body is rendered from the merged platform corpus note by
+`scripts/render-release-body.sh`.
 
 ## Tag policy
 
-Tags are `vX.Y.Z`, SemVer, versioned independently of every other Mercury repo (never mirrored). The tag points at
-the merged commit on `main`. The plugin `version` in `plugins/mercury/.claude-plugin/plugin.json` and
-`plugins/mercury/plugin.json` must match and equal the tag. No frozen lines.
+Tags are `vX.Y.Z`, versioned independently of other Mercury repos (skill, "Independent versioning"). Evidenced in
+`.github/workflows/ci.yml`: the Claude and Codex plugin versions must be equal (line 90). Anything further
+(tag-to-version equality, which commit is tagged, frozen lines) is not enforced by CI and is not stated here.
 
 ## Artifacts
 
-The plugin is distributed from the repo itself through the plugin marketplace. The only built artifact is
-`skills/using-mercury.skill`, rebuilt by `scripts/build-skill.sh`; CI checks it matches its source.
+Evidenced in `.github/workflows/ci.yml`: the packaged skill `skills/using-mercury.skill` must match a rebuild by
+`scripts/build-skill.sh` (lines 108-112), and the plugin must include the `using-mercury` skill (line 105). No other
+built artifact is evidenced.
 
 ## Docs bundle
 
@@ -27,10 +29,11 @@ None. This repo produces no docs bundle; the reader note is authored in platform
 
 ## Deploy boundary
 
-Merging or publishing here deploys nothing. The platform docs deploy publishes the reader note, and the platform
-Discord bot posts it after that deploy (canon step 9). Publishing the GitHub Release posts nothing to Discord; the
-disabled `discord-release-announce.yml` workflow was removed (PLT-731). Draft-first stays: create the release as a
-draft and publish only on the operator's explicit go.
+Merging or publishing here deploys nothing and posts nothing to Discord. The platform docs deploy publishes the
+reader note. The Discord post is a deliberate platform `workflow_dispatch` run by the release coordinator after that
+deploy (canon step 9): dry run first, live run only after the operator's go, and products in `exclude_products` are
+skipped. It is not automatic. The former `discord-release-announce.yml` workflow was removed (PLT-731), so no
+workflow here announces on publish and a draft release is not required.
 
 ## Deviation
 
@@ -44,5 +47,4 @@ cut here. The GitHub Release body is a rendering of it, never a second draft.
 
 ## Yank
 
-Delete the GitHub Release and the tag (`gh release delete vX.Y.Z --cleanup-tag`), then ship a corrected patch
-version; the platform note is withdrawn or corrected through a platform correction note.
+Not defined for this repo yet; decide with the operator when a release must be withdrawn.
