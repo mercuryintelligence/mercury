@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1708 626" width="1708" height="626" role="img" aria-label="PR Lens automation system context" font-family="-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif">
+<title>PR Lens automation system context</title>
+<desc>How a pull request event flows through Actions into the PR Lens provider and back as a comment.</desc>
+<defs><pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="rgba(140,149,159,.5)"/></pattern><marker id="mk-added" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f883d"/></marker><marker id="mko-added" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M2,1 L10,5 L2,9" fill="none" stroke="#1f883d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><marker id="mk-modified" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#bf8700"/></marker><marker id="mko-modified" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M2,1 L10,5 L2,9" fill="none" stroke="#bf8700" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><marker id="mk-removed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#cf222e"/></marker><marker id="mko-removed" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M2,1 L10,5 L2,9" fill="none" stroke="#cf222e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><marker id="mk-neutral" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8c959f"/></marker><marker id="mko-neutral" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M2,1 L10,5 L2,9" fill="none" stroke="#8c959f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="0" y="0" width="1708" height="626" rx="12" fill="#f4f5f7"/>
+<rect x="0" y="0" width="1708" height="626" rx="12" fill="url(#dots)"/>
+<g><rect class="lanebox" x="16" y="44" width="404" height="566" rx="12" fill="rgba(255,255,255,.55)"/>
+<text class="lanelabel" x="32" y="68" font-size="10" font-weight="700" letter-spacing=".12em" fill="#59636e">CONTRIBUTOR</text>
+<rect class="lanebox" x="440" y="44" width="404" height="566" rx="12" fill="rgba(255,255,255,.55)"/>
+<text class="lanelabel" x="456" y="68" font-size="10" font-weight="700" letter-spacing=".12em" fill="#59636e">GITHUB PLATFORM</text>
+<rect class="lanebox" x="864" y="44" width="404" height="566" rx="12" fill="rgba(255,255,255,.55)"/>
+<text class="lanelabel" x="880" y="68" font-size="10" font-weight="700" letter-spacing=".12em" fill="#59636e">AUTOMATION RUNTIME · GITHUB ACTIONS</text>
+<rect class="lanebox" x="1288" y="44" width="404" height="566" rx="12" fill="rgba(255,255,255,.55)"/>
+<text class="lanelabel" x="1304" y="68" font-size="10" font-weight="700" letter-spacing=".12em" fill="#59636e">PR LENS SERVICE · API.COMMANDCODE.AI</text></g>
+<g><path class="edge edge-neutral context" d="M404,118 L417,118 C424.18,118 430,123.82 430,131 L430,209 C430,216.18 435.82,222 443,222 L456,222" marker-end="url(#mk-neutral)" fill="none" stroke="#8c959f" stroke-width="1.5" opacity="0.82"/>
+<path class="glow" stroke="#1f883d" d="M828,214 L831,214 C832.66,214 834,215.34 834,217 L834,300 C834,312.7 844.3,323 857,323 L880,323" fill="none" stroke-width="7" opacity="0.14"/>
+<path class="edge edge-added hero" d="M828,214 L831,214 C832.66,214 834,215.34 834,217 L834,300 C834,312.7 844.3,323 857,323 L880,323" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="2.25"/>
+<path class="edge edge-added" d="M880,339 L863.67,339 C854.65,339 847.33,346.31 847.33,355.33 L847.33,435.33 C847.33,440.67 843.01,445 837.67,445 L828,445" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="1.5"/>
+<path class="edge edge-added" d="M1066,362 L1066,379 C1066,388.39 1058.39,396 1049,396 L979,396 C974.03,396 970,400.03 970,405 L970,414" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="1.5"/>
+<path class="edge edge-neutral context" d="M880,445 L877,445 C875.34,445 874,443.66 874,442 L874,253 C874,240.3 863.7,230 851,230 L828,230" marker-end="url(#mk-neutral)" fill="none" stroke="#8c959f" stroke-width="1.5" opacity="0.82"/>
+<path class="edge edge-added" d="M1066,362 L1066,371 C1066,375.97 1070.03,380 1075,380 L1145,380 C1154.39,380 1162,387.61 1162,397 L1162,414" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="1.5"/>
+<path class="edge edge-added" d="M1118,476 L1118,528" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="1.5"/>
+<path class="edge edge-added" d="M1252,445 L1265,445 C1272.18,445 1278,450.82 1278,458 L1278,546 C1278,553.18 1283.82,559 1291,559 L1304,559" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="1.5"/>
+<path class="edge edge-added" d="M1154,476 L1154,493 C1154,502.39 1146.39,510 1137,510 L882.67,510 C870.52,510 860.67,519.85 860.67,532 L860.67,537.67 C860.67,546.69 853.35,554 844.33,554 L828,554" marker-end="url(#mk-added)" fill="none" stroke="#1f883d" stroke-width="1.5"/></g>
+<g><g class="cardsh context" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))" opacity="0.82"><rect class="card" x="32" y="92" width="372" height="52" rx="10" fill="#ffffff" stroke-width="1" stroke="#d1d9e0"/>
+<rect class="chip" x="46" y="105" width="26" height="26" rx="7" fill="#f1f3f5"/><g><rect class="glyph-stroke" x="51" y="112" width="16" height="12" rx="2" stroke="#59636e" stroke-width="1.4" fill="none"/>
+<path class="glyph-stroke" d="M51,114 l8,6 8,-6" stroke="#59636e" stroke-width="1.4" fill="none"/></g>
+<text class="ntitle" x="82" y="123" font-size="13" font-weight="600" fill="#1f2328">PR author</text></g>
+<g class="cardsh context" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))" opacity="0.82"><rect class="card" x="456" y="196" width="372" height="52" rx="10" fill="#ffffff" stroke-width="1" stroke="#d1d9e0"/>
+<rect class="chip" x="470" y="209" width="26" height="26" rx="7" fill="#f1f3f5"/><g><circle class="glyph" fill="#59636e" cx="478" cy="222" r="1.8"/>
+<circle class="glyph" fill="#59636e" cx="483" cy="222" r="1.8"/>
+<circle class="glyph" fill="#59636e" cx="488" cy="222" r="1.8"/></g>
+<text class="ntitle" x="506" y="227" font-size="13" font-weight="600" fill="#1f2328">Pull request</text></g>
+<g class="cardsh context" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))" opacity="0.82"><rect class="card" x="456" y="414" width="372" height="62" rx="10" fill="#ffffff" stroke-width="1" stroke="#d1d9e0"/>
+<rect class="chip" x="470" y="432" width="26" height="26" rx="7" fill="#f1f3f5"/><g><rect class="glyph-stroke" x="476.5" y="438.5" width="13" height="13" rx="3" stroke="#59636e" stroke-width="1.4" fill="none"/>
+<circle class="glyph" fill="#59636e" cx="483" cy="445" r="2"/></g>
+<text class="ntitle" x="506" y="441" font-size="13" font-weight="600" fill="#1f2328">Actions runner</text>
+<text class="nsub" x="506" y="459" font-size="9.5" fill="#59636e" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">ubuntu-latest</text></g>
+<g class="cardsh" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))"><rect class="card card-added" x="456" y="528" width="372" height="52" rx="10" fill="#ffffff" stroke-width="1" stroke="#1f883d" stroke-opacity="0.55"/>
+<rect class="chip" x="470" y="541" width="26" height="26" rx="7" fill="#f1f3f5"/><g><rect class="glyph-stroke" x="476" y="548" width="14" height="12" rx="2" stroke="#59636e" stroke-width="1.4" fill="none"/>
+<path class="glyph-stroke" d="M480.5,548 v12" stroke="#59636e" stroke-width="1.4" fill="none"/></g>
+<text class="ntitle" x="506" y="559" font-size="13" font-weight="600" fill="#1f2328">PR comment + SVGs</text>
+<g class="bdg bdg-added"><rect x="780.45" y="520" width="40.55" height="16" rx="8" fill="#b9f0c4" stroke="rgba(31,136,61,.55)" stroke-width="1"/><text x="800.73" y="531" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing=".06em" fill="#116329">NEW</text></g></g>
+<g class="cardsh" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))"><rect class="card card-added" x="880" y="300" width="372" height="62" rx="10" fill="#ffffff" stroke-width="1" stroke="#1f883d" stroke-opacity="0.55"/>
+<rect class="chip" x="894" y="318" width="26" height="26" rx="7" fill="#f1f3f5"/><g><circle class="glyph-stroke" stroke="#59636e" stroke-width="1.4" fill="none" cx="907" cy="331" r="6.5"/>
+<path class="glyph-stroke" d="M907,327.5 V331 H910" stroke="#59636e" stroke-width="1.4" fill="none"/></g>
+<text class="ntitle" x="930" y="327" font-size="13" font-weight="600" fill="#1f2328">PR Lens workflow</text>
+<text class="nsub" x="930" y="345" font-size="9.5" fill="#59636e" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">pull_request + per-PR concurrency</text>
+<g class="bdg bdg-added"><rect x="1204.45" y="292" width="40.55" height="16" rx="8" fill="#b9f0c4" stroke="rgba(31,136,61,.55)" stroke-width="1"/><text x="1224.73" y="303" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing=".06em" fill="#116329">NEW</text></g></g>
+<g class="cardsh context" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))" opacity="0.82"><rect class="card" x="880" y="414" width="180" height="62" rx="10" fill="#ffffff" stroke-width="1" stroke="#d1d9e0"/>
+<rect class="chip" x="894" y="432" width="26" height="26" rx="7" fill="#f1f3f5"/><g><text class="glyph" x="907" y="449.5" text-anchor="middle" fill="#59636e" font-size="11" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">{ }</text></g>
+<text class="ntitle" x="930" y="441" font-size="11.5" font-weight="600" fill="#1f2328">Checkout step</text>
+<text class="nsub" x="930" y="459" font-size="9.5" fill="#59636e" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">actions/checkout v4</text></g>
+<g class="cardsh" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))"><rect class="card card-added" x="1072" y="414" width="180" height="62" rx="10" fill="#ffffff" stroke-width="1" stroke="#1f883d" stroke-opacity="0.55"/>
+<rect class="chip" x="1086" y="432" width="26" height="26" rx="7" fill="#f1f3f5"/><g><text class="glyph" x="1099" y="449.5" text-anchor="middle" fill="#59636e" font-size="11" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">{ }</text></g>
+<text class="ntitle" x="1122" y="441" font-size="11.5" font-weight="600" fill="#1f2328">PR Lens action step</text>
+<text class="nsub" x="1122" y="459" font-size="9.5" fill="#59636e" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">coldteadotai/pr-len…</text>
+<g class="bdg bdg-added"><rect x="1204.45" y="406" width="40.55" height="16" rx="8" fill="#b9f0c4" stroke="rgba(31,136,61,.55)" stroke-width="1"/><text x="1224.73" y="417" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing=".06em" fill="#116329">NEW</text></g></g>
+<g class="cardsh" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))"><rect class="card card-added" x="880" y="528" width="372" height="62" rx="10" fill="#ffffff" stroke-width="1" stroke="#1f883d" stroke-opacity="0.55"/>
+<rect class="chip" x="894" y="546" width="26" height="26" rx="7" fill="#f1f3f5"/><g><path class="glyph-stroke" d="M900,555 h14" stroke="#59636e" stroke-width="1.4" fill="none"/>
+<path class="glyph-stroke" d="M900,563 h14" stroke="#59636e" stroke-width="1.4" fill="none"/>
+<circle class="glyph" fill="#59636e" cx="905" cy="555" r="2.2"/>
+<circle class="glyph" fill="#59636e" cx="910" cy="563" r="2.2"/></g>
+<text class="ntitle" x="930" y="555" font-size="13" font-weight="600" fill="#1f2328">PR Lens map config</text>
+<text class="nsub" x="930" y="573" font-size="9.5" fill="#59636e" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">map exclude list</text>
+<g class="bdg bdg-added"><rect x="1204.45" y="520" width="40.55" height="16" rx="8" fill="#b9f0c4" stroke="rgba(31,136,61,.55)" stroke-width="1"/><text x="1224.73" y="531" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing=".06em" fill="#116329">NEW</text></g></g>
+<g class="cardsh context" filter="drop-shadow(0 1px 2px rgba(31,35,40,.14))" opacity="0.82"><rect class="card" x="1304" y="528" width="372" height="62" rx="10" fill="#ffffff" stroke-width="1" stroke="#d1d9e0"/>
+<rect class="chip" x="1318" y="546" width="26" height="26" rx="7" fill="#f1f3f5"/><g><rect class="glyph-stroke" x="1323" y="553" width="16" height="12" rx="2" stroke="#59636e" stroke-width="1.4" fill="none"/>
+<path class="glyph-stroke" d="M1323,555 l8,6 8,-6" stroke="#59636e" stroke-width="1.4" fill="none"/></g>
+<text class="ntitle" x="1354" y="555" font-size="13" font-weight="600" fill="#1f2328">PR Lens provider API</text>
+<text class="nsub" x="1354" y="573" font-size="9.5" fill="#59636e" font-family="ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace">openai-compatible endpoint</text></g></g>
+<g><g><rect class="lpill" x="386.17" y="162.5" width="87.66" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext" x="430" y="173.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#59636e">opens / updates</text></g>
+<g><rect class="lpill" x="762.91" y="260" width="102.19" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="814" y="271" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">pull_request trigger</text></g>
+<g><rect class="lpill" x="761.76" y="387" width="111.15" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="817.33" y="398" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">runs-on ubuntu-latest</text></g>
+<g><rect class="lpill" x="985.22" y="388.5" width="74.78" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="1022.61" y="399.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">fetch-depth 0</text></g>
+<g><rect class="lpill" x="855.83" y="368" width="96.34" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext" x="904" y="379" text-anchor="middle" font-size="9.5" font-weight="600" fill="#59636e">fetch base + head</text></g>
+<g><rect class="lpill" x="1073.18" y="372.5" width="73.65" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="1110" y="383.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">run action v0</text></g>
+<g><rect class="lpill" x="1048.03" y="488" width="99.95" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="1098" y="499" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">load map excludes</text></g>
+<g><rect class="lpill" x="1219.92" y="493" width="116.17" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="1278" y="504" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">model muse-spark-1.3</text></g>
+<g><rect class="lpill" x="908.14" y="502.5" width="129.89" height="15" rx="7.5" fill="#ffffff" stroke="#d8dee4" stroke-width="1"/><text class="ltext ltext-added" x="973.08" y="513.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#116329">publish SVGs + comment</text></g></g>
+</svg>
