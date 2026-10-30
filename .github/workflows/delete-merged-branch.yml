@@ -1,0 +1,25 @@
+name: Delete merged branch
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  delete:
+    if: github.event.pull_request.merged && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete the head branch unless it is long-lived
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD: ${{ github.event.pull_request.head.ref }}
+          DEFAULT: ${{ github.event.repository.default_branch }}
+        run: |
+          case "$HEAD" in
+            "$DEFAULT"|main|master|stable|develop|release|release/*)
+              echo "keep long-lived branch $HEAD"; exit 0 ;;
+          esac
+          gh api -X DELETE "repos/${{ github.repository }}/git/refs/heads/$HEAD" && echo "deleted $HEAD"
